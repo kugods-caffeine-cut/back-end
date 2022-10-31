@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon --watch . ./index.js",
-    "lint": "eslint --ext .js .",
-    "format": "prettier \"./**/*.js\" --write --ignore-unknown",
-    "format:check": "prettier --check \"./**/*.js\" --ignore-unknown"
+    "lint:check": "eslint --ext .js .",
+    "lint:fix": "eslint --fix --ext .js .",
+    "format:check": "prettier --check \"./**/*.js\" --ignore-unknown",
+    "format:fix": "prettier \"./**/*.js\" --write --ignore-unknown"
   },
   "repository": {
     "type": "git",
