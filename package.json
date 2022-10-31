@@ -4,7 +4,10 @@
   "description": "caffeine-cut-server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "nodemon --watch . ./index.js",
+    "lint": "eslint --ext .js .",
+    "format": "prettier \"./**/*.js\" --write --ignore-unknown",
+    "format:check": "prettier --check \"./**/*.js\" --ignore-unknown"
   },
   "repository": {
     "type": "git",
@@ -22,5 +25,11 @@
     "mongoose": "^6.7.0",
     "nodemon": "^2.0.20",
     "pm2": "^5.2.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.26.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "2.7.1"
   }
 }
