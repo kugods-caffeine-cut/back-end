@@ -17,7 +17,7 @@ require("dotenv").config();
 
 const connectMongoDB = () => {
     mongoose.connect(
-        `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PWD}@${process.env.DB_NAME}.fhokkc8.mongodb.net/?retryWrites=true&w=majority`).then(() => {
+        `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PWD}@${process.env.DB_NAME}.awwmmyt.mongodb.net/?retryWrites=true&w=majority`).then(() => {
             console.log("DB CONNECTION : SUCCESS")
         }, (err) => { console.log("DB CONNECTION : ERROR\nERROR : " + err) })
 
