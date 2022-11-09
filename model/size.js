@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const sizeSchema = new mongoose.Schema({
-  shopName: {type: Srting},
+  shopName: {type: String},
   numSize: {type: Number},
   strSize: {type: String},
 });
