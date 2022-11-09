@@ -1,6 +1,6 @@
 import {} from "dotenv/config";
 import express from "express";
-import "./db";
+import "./config/mongoose";
 
 const app = express();
 const port = 8000;
