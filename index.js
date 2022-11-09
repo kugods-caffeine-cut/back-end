@@ -1,4 +1,7 @@
-const express = require("express");
+import {} from "dotenv/config";
+import express from "express";
+import "./db";
+
 const app = express();
 const port = 8000;
 
