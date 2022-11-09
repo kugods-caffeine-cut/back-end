@@ -6,5 +6,5 @@ const sizeSchema = new mongoose.Schema({
   strSize: {type: String},
 });
 
-const Size = mongoose.model("Stem", sizeSchema);
+const Size = mongoose.model("Size", sizeSchema);
 export default Size;
