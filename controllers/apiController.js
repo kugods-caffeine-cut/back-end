@@ -1,21 +1,21 @@
-import Drink from "../model/item";
-import Size from "../model/size";
+import Drink from "../model/Drink";
+import Size from "../model/Size";
 
-export const getApi = (req, res) => {
+export const getApi = async (req, res) => {
   res.send("API를 위한 router, controller 입니다.");
 };
-export const getAllDrink = (req, res) => {
+export const getAllDrink = async (req, res) => {
   res.send("getAllDrink 작업중");
 };
-export const postDrink = (req, res) => {
+export const postDrink = async (req, res) => {
   res.send("postDrink 작업중");
 };
-export const getOneDrink = (req, res) => {
+export const getOneDrink = async (req, res) => {
   res.send("getOneDrink 작업중");
 };
-export const patchDrink = (req, res) => {
+export const patchDrink = async (req, res) => {
   res.send("patchDrink 작업중");
 };
-export const deleteDrink = (req, res) => {
+export const deleteDrink = async (req, res) => {
   res.send("deleteDrink 작업중");
 };
