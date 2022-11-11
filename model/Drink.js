@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const itemSchema = new mongoose.Schema(
+const drinkSchema = new mongoose.Schema(
   {
     brand: {type: String, required: true},
     drink_name: {type: String, required: true},
@@ -15,5 +15,5 @@ const itemSchema = new mongoose.Schema(
   },
 );
 
-const Item = mongoose.model("Item", itemSchema);
-export default Item;
+const Drink = mongoose.model("Drink", drinkSchema);
+export default Drink;
