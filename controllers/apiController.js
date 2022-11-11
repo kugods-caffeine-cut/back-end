@@ -1,11 +1,11 @@
 import Drink from "../model/Drink";
-import Size from "../model/Size";
 
 export const getApi = async (req, res) => {
   res.send("API를 위한 router, controller 입니다.");
 };
 export const getAllDrink = async (req, res) => {
-  res.send("getAllDrink 작업중");
+  const drinksInfo = await Drink.find();
+  res.send(drinksInfo);
 };
 export const postDrink = async (req, res) => {
   res.send("postDrink 작업중");
