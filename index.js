@@ -13,4 +13,4 @@ app.listen(port, () => {
 });
 
 app.use("/", rootRouter);
-app.use("/coffee", apiRouter);
+app.use("/api", apiRouter);
