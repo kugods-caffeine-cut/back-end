@@ -4,7 +4,7 @@
   "description": "caffeine-cut-server",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon --exec babel-node src/index.js",
+    "start:dev": "nodemon --exec babel-node index.js",
     "lint:check": "eslint --ext .js .",
     "lint:fix": "eslint --fix --ext .js .",
     "format:check": "prettier --check \"./**/*.js\" --ignore-unknown",
