@@ -3,7 +3,7 @@ import express from "express";
 import "./config/mongoose";
 
 import rootRouter from "./routes/rootRouter";
-import coffeeRouter from "./routes/coffeeRouter";
+import apiRouter from "./routes/apiRouter";
 
 const app = express();
 const port = 8000;
@@ -13,4 +13,4 @@ app.listen(port, () => {
 });
 
 app.use("/", rootRouter);
-app.use("/coffee", coffeeRouter);
+app.use("/coffee", apiRouter);
