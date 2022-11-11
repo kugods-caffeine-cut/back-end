@@ -19,5 +19,7 @@ export const patchDrink = async (req, res) => {
   res.send("patchDrink 작업중");
 };
 export const deleteDrink = async (req, res) => {
-  res.send("deleteDrink 작업중");
+  const drinkID = req.params;
+  await Drink.findByIdAndDelete(drinkID);
+  res.send(`id가 ${drinkID}인 drink를 삭제했습니다.`);
 };
