@@ -6,9 +6,9 @@ const drinkSchema = new mongoose.Schema(
     drink_name: {type: String, required: true},
     temp: {type: String},
     img: {type: String},
-    size: {type: Number},
+    size: {type: String},
     kcal: {type: Number},
-    caffeine: {type: Number, required: true},
+    caffeine: {type: Number},
   },
   {
     timestamps: true,
