@@ -20,3 +20,8 @@ export const postDrink = async (req, res) => {
   });
   res.send(newDrink);
 };
+export const getOneDrink = async (req, res) => {
+  const {drinkID} = req.params;
+  const drinkInfo = await Drink.findById(drinkID);
+  res.send(drinkInfo);
+};
