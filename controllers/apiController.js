@@ -66,7 +66,33 @@ const DrinkController = {
     try {
       const {drinkID} = req.params;
       await Drink.findByIdAndDelete(drinkID);
-      httpResponse.SUCCESS_OK(`id가 ${drinkID}인 drink를 삭제했습니다.`);
+      httpResponse.SUCCESS_OK(
+        res,
+        `id가 ${drinkID}인 drink를 삭제했습니다.`,
+        {},
+      );
+    } catch (error) {
+      httpResponse.BAD_REQUEST(res, "", error);
+    }
+  },
+
+  searchDrink: async (req, res) => {
+    try {
+      const {searchKeyword} = req.params;
+      const result = await Drink.aggregate([
+        {
+          $search: {
+            index: "default",
+            text: {
+              query: searchKeyword,
+              path: {
+                wildcard: "*",
+              },
+            },
+          },
+        },
+      ]);
+      httpResponse.SUCCESS_OK(res, `searchkey : ${searchKeyword}`, result);
     } catch (error) {
       httpResponse.BAD_REQUEST(res, "", error);
     }
