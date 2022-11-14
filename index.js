@@ -1,19 +1,19 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
+const {connect} = require("./config/mongoose.js");
+
+const {rootRouter} = require("./routes");
+
 const port = 8000;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use(express.urlencoded({extended: true}));
 
-app.get('/test', (req, res) => {
-    res.send('Hello World! TEST')
-})
-
+app.use("/", rootRouter);
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-}
+  console.log(`Caffeine-Cut app listening on port ${port}`);
+});
 
 
 
