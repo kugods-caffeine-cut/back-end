@@ -1,3 +1,7 @@
-export const getHome = (req, res) => {
-  res.send("hello world!");
+const RootController = {
+  getHome: (req, res) => {
+    res.send("hello world!");
+  },
 };
+
+module.exports = RootController;

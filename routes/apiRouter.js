@@ -1,20 +1,11 @@
-import express from "express";
-import {
-  getApi,
-  getAllDrink,
-  postDrink,
-  getOneDrink,
-  patchDrink,
-  deleteDrink,
-} from "../controllers/apiController";
+const apiRouter = require("express").Router();
+const DrinkController = require("../controllers/apiController");
 
-const apiRouter = express.Router();
+apiRouter.get("/drink", DrinkController.getAllDrink);
+apiRouter.post("/drink", DrinkController.postDrink);
+apiRouter.get("/drink/:drinkID", DrinkController.getOneDrink);
+//apiRouter.patch("/drink/:drinkID", DrinkController.patchDrink);
+//apiRouter.delete("/drink/:drinkID", DrinkController.deleteDrink);
+apiRouter.get("/drink/search/:searchKeyword", DrinkController.searchDrink);
 
-apiRouter.route("/drink").get(getAllDrink).post(postDrink);
-apiRouter
-  .route("/drink/:drinkID")
-  .get(getOneDrink)
-  .patch(patchDrink)
-  .delete(deleteDrink);
-
-export default apiRouter;
+module.exports = {apiRouter};

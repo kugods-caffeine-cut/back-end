@@ -1,18 +1,16 @@
-import {} from "dotenv/config";
-import express from "express";
-import "./config/mongoose";
-
-import rootRouter from "./routes/rootRouter";
-import apiRouter from "./routes/apiRouter";
-
+require("dotenv").config();
+const express = require("express");
 const app = express();
-const port = 8000;
+const {connect} = require("./config/mongoose.js");
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+const {rootRouter} = require("./routes");
+
+const port = 8000;
 
 app.use(express.urlencoded({extended: true}));
 
 app.use("/", rootRouter);
-app.use("/api", apiRouter);
+
+app.listen(port, () => {
+  console.log(`Caffeine-Cut app listening on port ${port}`);
+});
