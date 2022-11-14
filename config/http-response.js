@@ -1,8 +1,8 @@
 class httpResponse {
   static SUCCESS_OK(res, message, data) {
     const response = {
-      status: "SUCCESS_OK 200",
-      message: message || "",
+      status: "200",
+      message: message || "swagger-jsdoc",
       data: data || {},
     };
     console.log(response);
@@ -10,24 +10,24 @@ class httpResponse {
   }
   static SUCCESS_CREATED(res, message, data) {
     response = {
-      status: "SUCCESS_CREATED 201",
-      message: message || "",
+      status: "201",
+      message: message || "SUCCESS_CREATED",
       data: data || {},
     };
     res.json(response);
   }
   static NOT_FOUND(res, message, data) {
     response = {
-      status: "CLIENT_ERROR_NOT_FOUND 404",
-      message: message || "",
+      status: "404",
+      message: message || "CLIENT_ERROR_NOT_FOUND",
       data: data || {},
     };
     res.json(response);
   }
   static BAD_REQUEST(res, message, data) {
     const response = {
-      status: "CLIENT_ERROR_BAD_REQUEST 400",
-      message: message || "",
+      status: "400",
+      message: message || "CLIENT_ERROR_BAD_REQUEST",
       data: data || {},
     };
     console.log(response);
@@ -36,8 +36,8 @@ class httpResponse {
   }
   static INTERNAL_ERROR(res, message, data) {
     response = {
-      status: "INTERNAL_ERROR 500",
-      message: message || "",
+      status: "500",
+      message: message || "INTERNAL_ERROR",
       data: data || {},
     };
     res.json(response);
