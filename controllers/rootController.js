@@ -1,6 +1,8 @@
+const path = require("path");
+
 const RootController = {
   getHome: (req, res) => {
-    res.send("hello world!");
+    res.sendFile(path.join(__dirname, "../public/index.html"));
   },
 };
 
