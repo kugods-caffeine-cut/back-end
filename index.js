@@ -14,7 +14,3 @@ app.use("/", rootRouter);
 app.listen(port, () => {
   console.log(`Caffeine-Cut app listening on port ${port}`);
 });
-
-
-
-)
