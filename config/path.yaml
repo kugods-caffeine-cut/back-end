@@ -1,0 +1,265 @@
+openapi: 3.0.3
+info:
+  title: 카페인 어디까지 먹었니? Caffeine-Cut
+  description: |-
+    `카페인 어디까지 먹었니` 프로젝트 API 문서입니다.
+
+    - 기본 URL : [http://ec2-52-78-225-87.ap-northeast-2.compute.amazonaws.com](http://ec2-52-78-225-87.ap-northeast-2.compute.amazonaws.com).
+  version: 1.0.0
+servers:
+  - url: http://ec2-52-78-225-87.ap-northeast-2.compute.amazonaws.com
+tags:
+  - name: drink
+    description: 음료에 대한 항목입니다.
+paths:
+  /api/drink:
+    get:
+      tags:
+        - drink
+      summary: 모든 음료를 조회합니다.
+      description: 모든 음료 목록을 조회합니다.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "200"
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          default: "636f5f1198dec033db2a4bc6"
+                        brand:
+                          type: string
+                          default: "커피빈"
+                        drink_name:
+                          type: string
+                          default: "아메리카노"
+                        temp:
+                          type: string
+                          default: ""
+                        img:
+                          type: string
+                          default: "https://www.coffeebeankorea.com/data/menu/data/menu/아메리카노23.jpg"
+                        size:
+                          type: string
+                          default: "스몰"
+                        kcal:
+                          type: integer
+                          default: 0
+                        caffeine:
+                          type: integer
+                          default: 198
+  /api/drink/{drinkId}:
+    get:
+      tags:
+        - drink
+      summary: 특정 음료 1개를 ObjectID로 조회합니다
+      description: 특정 음료 1개를 ObjectID로 조회합니다
+      parameters:
+        - name: drinkId
+          in: path
+          description: 조회할 음료의 ID
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "200"
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        default: "636f5fa258e81b16d1707b1c"
+                      brand:
+                        type: string
+                        default: "스타벅스"
+                      drink_name:
+                        type: string
+                        default: "아이스 카페 아메리카노"
+                      temp:
+                        type: string
+                        default: ""
+                      img:
+                        type: string
+                        default: "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[110563]_20210426095937947.jpg"
+                      size:
+                        type: string
+                        default: "톨"
+                      kcal:
+                        type: integer
+                        default: 10
+                      caffeine:
+                        type: integer
+                        default: 150
+        "400":
+          description: Invalid Object ID Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "400"
+                  message:
+                    type: string
+                    default: "CLIENT_ERROR_BAD_REQUEST"
+                  data:
+                    type: object
+                    properties:
+                      stringValue:
+                        type: string
+                        default: '"636f5fa258e81b16d1707b8"'
+                      valueType:
+                        type: string
+                        default:
+                          type: string
+                          default: "string"
+                      kind:
+                        type: string
+                        default: "ObjectId"
+                      value:
+                        type: string
+                        default: "636f5fa258e81b16d1707b8"
+                      path:
+                        type: string
+                        default: "_id"
+                      reason:
+                        type: string
+                        default: ""
+                      name:
+                        type: string
+                        default: "CastError"
+                      message:
+                        type: string
+                        default: 'Cast to ObjectId failed for value "636f5fa258e81b16d1707b8" (type string) at path "_id" for model "Drink"'
+
+  /api/drink/search/{searchKey}:
+    get:
+      tags:
+        - drink
+      summary: 특정 키워드로 연관된 음료 목록을 조회합니다
+      description: 특정 키워드로 연관된 음료 목록을 조회합니다
+      parameters:
+        - name: searchKey
+          in: path
+          description: 조회할 음료의 키워드  (공백 포함 가능)
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "200"
+                  message:
+                    type: string
+                    default: "searchkey : 스타벅스 아메리카노"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          default: "636f5fa258e81b16d1707b1c"
+                        brand:
+                          type: string
+                          default: "스타벅스"
+                        drink_name:
+                          type: string
+                          default: "아이스 카페 아메리카노"
+                        temp:
+                          type: string
+                          default: ""
+                        img:
+                          type: string
+                          default: "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[110563]_20210426095937947.jpg"
+                        size:
+                          type: string
+                          default: "톨"
+                        kcal:
+                          type: integer
+                          default: 10
+                        caffeine:
+                          type: integer
+                          default: 150
+
+components:
+  schemas:
+    drink:
+      type: object
+      properties:
+        _id:
+          type: string
+          default: "636f5fa258e81b16d1707b1c"
+        brand:
+          type: string
+          default: "스타벅스"
+        drink_name:
+          type: string
+          default: "아이스 카페 아메리카노"
+        temp:
+          type: string
+          default: ""
+        img:
+          type: string
+          default: "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[110563]_20210426095937947.jpg"
+        size:
+          type: string
+          default: "톨"
+        kcal:
+          type: integer
+          default: 10
+        caffeine:
+          type: integer
+          default: 150
+    brand-size:
+      type: object
+      properties:
+        _id:
+          type: string
+          default: "636f5fa258e81b16d1707b1c"
+        brand:
+          type: string
+          default: "스타벅스"
+        size_oz:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+              default: "톨"
+
+          default: [["톨", 12], ["그란데", 16]]
