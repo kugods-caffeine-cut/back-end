@@ -11,6 +11,7 @@ const drinkSchema = new mongoose.Schema(
     caffeine: {type: Number},
   },
   {
+    versionKey: false,
     timestamps: true,
   },
 );
