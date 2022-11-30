@@ -4,7 +4,19 @@ const {httpResponse} = require("../config/http-response");
 const DrinkController = {
   getAllDrink: async (req, res) => {
     try {
-      const drinksInfo = await Drink.find();
+      const drinksInfo = await Drink.find(
+        {},
+        {
+          _id: true,
+          brand: true,
+          drink_name: true,
+          temp: true,
+          img: true,
+          size: true,
+          kcal: true,
+          caffeine: true,
+        },
+      );
       return httpResponse.SUCCESS_OK(res, "", drinksInfo);
     } catch (error) {
       return httpResponse.BAD_REQUEST(res, "", error);
@@ -32,7 +44,19 @@ const DrinkController = {
   getOneDrink: async (req, res) => {
     try {
       const {drinkID} = req.params;
-      const drinkInfo = await Drink.findById(drinkID);
+      const drinkInfo = await Drink.find(
+        {_id: drinkID},
+        {
+          _id: true,
+          brand: true,
+          drink_name: true,
+          temp: true,
+          img: true,
+          size: true,
+          kcal: true,
+          caffeine: true,
+        },
+      );
       httpResponse.SUCCESS_OK(res, "", drinkInfo);
     } catch (error) {
       httpResponse.BAD_REQUEST(res, "", error);
