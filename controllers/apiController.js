@@ -115,6 +115,18 @@ const DrinkController = {
             },
           },
         },
+        {
+          $project: {
+            _id: 1,
+            brand: 1,
+            drink_name: 1,
+            temp: 1,
+            img: 1,
+            size: 1,
+            kcal: 1,
+            caffeine: 1,
+          },
+        },
       ]);
       httpResponse.SUCCESS_OK(res, `searchkey : ${searchKeyword}`, result);
     } catch (error) {
