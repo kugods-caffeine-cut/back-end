@@ -46,9 +46,9 @@ const DrinkController = {
 
   getOneDrink: async (req, res) => {
     try {
-      const {drinkID} = req.params;
+      const {drinkId} = req.params;
       const drinkInfo = await Drink.find(
-        {_id: drinkID},
+        {_id: drinkId},
         {
           _id: true,
           brand: true,
@@ -157,9 +157,9 @@ const DrinkController = {
   },
   getOneLog: async (req, res) => {
     try {
-      const {logID} = req.params;
+      const {logId} = req.params;
       const logInfo = await Drink.find(
-        {_id: logID},
+        {_id: logId},
         {
           _id: true,
           userId: true,
@@ -193,9 +193,9 @@ const DrinkController = {
   },
   getFavoriteDrinks: async (req, res) => {
     try {
-      const {userID} = req.params;
+      const {userId} = req.params;
       const user = await User.find(
-        {_id: userID},
+        {_id: userId},
         {
           favorites: true,
         },
