@@ -175,6 +175,22 @@ const DrinkController = {
       httpResponse.BAD_REQUEST(res, "", error);
     }
   },
+  postLog: async (req, res) => {
+    try {
+      const {userId, drinkId, size, num, caffeine, option} = req.body;
+      const newLog = await Log.create({
+        userId,
+        drinkId,
+        size,
+        num,
+        caffeine,
+        option,
+      });
+      httpResponse.SUCCESS_OK(res, "", newLog);
+    } catch (error) {
+      httpResponse.BAD_REQUEST(res, "", error);
+    }
+  },
 };
 
 module.exports = DrinkController;
