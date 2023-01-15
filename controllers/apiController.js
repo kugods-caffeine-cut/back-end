@@ -1,4 +1,7 @@
 const {Drink} = require("../model/Drink");
+const {Size} = require("../model/Size");
+const {User} = require("../model/User");
+const {Log} = require("../model/Log");
 const {httpResponse} = require("../config/http-response");
 
 const DrinkController = {
