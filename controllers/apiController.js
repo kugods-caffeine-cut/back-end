@@ -191,6 +191,21 @@ const DrinkController = {
       httpResponse.BAD_REQUEST(res, "", error);
     }
   },
+  getFavoriteDrinks: async (req, res) => {
+    try {
+      const {userID} = req.params;
+      const user = await User.find(
+        {_id: userID},
+        {
+          favorites: true,
+        },
+      ).populate(favorites);
+      const favorites = user.favorite;
+      httpResponse.SUCCESS_OK(res, "", favorites);
+    } catch (error) {
+      httpResponse.BAD_REQUEST(res, "", error);
+    }
+  },
 };
 
 module.exports = DrinkController;
