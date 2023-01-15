@@ -136,6 +136,25 @@ const DrinkController = {
       httpResponse.BAD_REQUEST(res, "", error);
     }
   },
+  getAllLogs: async (req, res) => {
+    try {
+      const logsInfo = await Log.find(
+        {},
+        {
+          _id: true,
+          userId: true,
+          drinkId: true,
+          size: true,
+          num: true,
+          caffeine: true,
+          option: true,
+        },
+      );
+      return httpResponse.SUCCESS_OK(res, "", logsInfo);
+    } catch (error) {
+      return httpResponse.BAD_REQUEST(res, "", error);
+    }
+  },
 };
 
 module.exports = DrinkController;
