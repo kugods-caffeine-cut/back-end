@@ -5,7 +5,7 @@ const {Log} = require("../model/Log");
 const {httpResponse} = require("../config/http-response");
 
 const DrinkController = {
-  getAllDrink: async (req, res) => {
+  getAllDrinks: async (req, res) => {
     try {
       const drinksInfo = await Drink.find(
         {},
@@ -103,7 +103,7 @@ const DrinkController = {
   //   }
   // },
 
-  searchDrink: async (req, res) => {
+  getSearchDrink: async (req, res) => {
     try {
       const {searchKeyword} = req.params;
       const result = await Drink.aggregate([
