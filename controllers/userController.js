@@ -30,6 +30,9 @@ const UserController = {
     try {
       const {userId} = req.params;
       const user = await User.findById(userId);
+      if (!user) {
+        return httpResponse.NOT_FOUND(res, "no user found", {});
+      }
       return httpResponse.SUCCESS_OK(res, "", user);
     } catch (error) {
       console.log(error);
