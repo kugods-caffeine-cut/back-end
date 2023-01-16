@@ -12,10 +12,10 @@ apiRouter.get("/drink/search/:searchKeyword", DrinkController.getSearchDrink);
 apiRouter.get("/log", DrinkController.getAllLogs);
 apiRouter.get("/log/:logId", DrinkController.getOneLog);
 apiRouter.post("/log", DrinkController.postLog);
-apiRouter.get("/favorite/:userId", DrinkController.getFavoriteDrinks);
 
 apiRouter.get("/user/", UserController.getAllUser);
 apiRouter.get("/user/:userId", UserController.getOneUser);
+apiRouter.get("/user/favorite/:userId", UserController.getFavoriteDrinks);
 apiRouter.post("/user", UserController.createOneUser);
 apiRouter.delete("/user/:userId", UserController.deleteOneUser);
 
