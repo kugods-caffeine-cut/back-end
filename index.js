@@ -4,7 +4,7 @@ const app = express();
 const {connect} = require("./config/mongoose.js");
 const path = require("path");
 
-const {rootRouter} = require("./routes");
+const {RootRouter} = require("./routes");
 
 const port = 8000;
 
@@ -12,7 +12,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", rootRouter);
+app.use("/", RootRouter);
 
 app.listen(port, () => {
   console.log(`Caffeine-Cut app listening on port ${port}`);

@@ -1,8 +1,8 @@
-const rootRouter = require("express").Router();
+const RootRouter = require("express").Router();
 const RootController = require("../controllers/rootController");
 const {apiRouter} = require("./apiRouter");
 
-rootRouter.get("/", RootController.getHome);
-rootRouter.use("/api", apiRouter);
+RootRouter.get("/", RootController.getHome);
+RootRouter.use("/api", apiRouter);
 
-module.exports = {rootRouter};
+module.exports = {RootRouter};
