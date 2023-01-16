@@ -1,5 +1,6 @@
 const apiRouter = require("express").Router();
-const DrinkController = require("../controllers/apiController");
+const DrinkController = require("../controllers/drinkController");
+const UserController = require("../controllers/userController");
 
 apiRouter.get("/drink", DrinkController.getAllDrinks);
 apiRouter.get("/drink/:drinkId", DrinkController.getOneDrink);
@@ -12,5 +13,10 @@ apiRouter.get("/log", DrinkController.getAllLogs);
 apiRouter.get("/log/:logId", DrinkController.getOneLog);
 apiRouter.post("/log", DrinkController.postLog);
 apiRouter.get("/favorite/:userId", DrinkController.getFavoriteDrinks);
+
+apiRouter.get("/user/", UserController.getAllUser);
+apiRouter.get("/user/:userId", UserController.getOneUser);
+apiRouter.post("/user", UserController.createOneUser);
+apiRouter.delete("/user/:userId", UserController.deleteOneUser);
 
 module.exports = {apiRouter};
