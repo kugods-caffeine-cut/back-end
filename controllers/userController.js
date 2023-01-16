@@ -1,7 +1,7 @@
 const {User} = require("../model/User");
 const {httpResponse} = require("../config/http-response");
 
-checkValidUser = async kakaoId => {
+const checkValidUser = async kakaoId => {
   try {
     const user = await User.find({kakaoId: kakaoId, isDeleted: false});
     console.log(user);
