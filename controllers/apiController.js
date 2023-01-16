@@ -194,13 +194,12 @@ const DrinkController = {
   getFavoriteDrinks: async (req, res) => {
     try {
       const {userId} = req.params;
-      const user = await User.find(
+      const {favorites} = await User.find(
         {_id: userId},
         {
           favorites: true,
         },
       ).populate(favorites);
-      const favorites = user.favorite;
       httpResponse.SUCCESS_OK(res, "", favorites);
     } catch (error) {
       httpResponse.BAD_REQUEST(res, "", error);
