@@ -1,7 +1,7 @@
 const {User} = require("../model/User");
 const {httpResponse} = require("../config/http-response");
 
-checkValidUser = async kakaoId => {
+const checkValidUser = async kakaoId => {
   try {
     const user = await User.find({kakaoId: kakaoId, isDeleted: false});
     console.log(user);
@@ -37,6 +37,20 @@ const UserController = {
     } catch (error) {
       console.log(error);
       return httpResponse.BAD_REQUEST(res, "", error);
+    }
+  },
+  getFavoriteDrinks: async (req, res) => {
+    try {
+      const {userId} = req.params;
+      const {favorites} = await User.find(
+        {_id: userId},
+        {
+          favorites: true,
+        },
+      ).populate(favorites);
+      httpResponse.SUCCESS_OK(res, "", favorites);
+    } catch (error) {
+      httpResponse.BAD_REQUEST(res, "", error);
     }
   },
   createOneUser: async (req, res) => {

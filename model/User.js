@@ -5,9 +5,9 @@ const userSchema = new mongoose.Schema(
     kakaoId: {type: String, required: true},
     // kakaoId = kakaoObj 안의 id 값
     kakaoObj: {type: Object, required: true},
-    favorite: {
+    favorites: {
       type: [mongoose.Schema.Types.ObjectId],
-      ref: "User",
+      ref: "Drink",
     },
     isDeleted: {
       type: Boolean,
