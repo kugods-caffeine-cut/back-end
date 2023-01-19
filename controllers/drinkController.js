@@ -26,7 +26,7 @@ const DrinkController = {
     }
   },
 
-  createDrink: async (req, res) => {
+  createOneDrink: async (req, res) => {
     try {
       const {brand, drink_name, temp, img, size, kcal, caffeine} = req.body;
       const newDrink = await Drink.create({
@@ -66,7 +66,7 @@ const DrinkController = {
     }
   },
 
-  // patchDrink: async (req, res) => {
+  // patchOneDrink: async (req, res) => {
   //   try {
   //     const {drinkID} = req.params;
   //     const {brand, drink_name, temp, img, size, kcal, caffeine} = req.body;
@@ -89,7 +89,7 @@ const DrinkController = {
   //   }
   // },
 
-  // deleteDrink: async (req, res) => {
+  // deleteOneDrink: async (req, res) => {
   //   try {
   //     const {drinkID} = req.params;
   //     await Drink.findByIdAndDelete(drinkID);
