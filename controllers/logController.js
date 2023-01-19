@@ -44,7 +44,7 @@ const LogController = {
       httpResponse.BAD_REQUEST(res, "", error);
     }
   },
-  postLog: async (req, res) => {
+  createLog: async (req, res) => {
     try {
       const {userId, drinkId, size, num, caffeine, option} = req.body;
       const newLog = await Log.create({

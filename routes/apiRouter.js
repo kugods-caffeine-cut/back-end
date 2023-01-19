@@ -5,14 +5,14 @@ const LogController = require("../controllers/logController");
 
 apiRouter.get("/drink", DrinkController.getAllDrinks);
 apiRouter.get("/drink/:drinkId", DrinkController.getOneDrink);
-apiRouter.post("/drink", DrinkController.postDrink);
+apiRouter.post("/drink", DrinkController.createDrink);
 //apiRouter.patch("/drink/:drinkID", DrinkController.patchDrink);
 //apiRouter.delete("/drink/:drinkID", DrinkController.deleteDrink);
 apiRouter.get("/drink/search/:searchKeyword", DrinkController.getSearchDrink);
 
 apiRouter.get("/log", LogController.getAllLogs);
 apiRouter.get("/log/:logId", LogController.getOneLog);
-apiRouter.post("/log", LogController.postLog);
+apiRouter.post("/log", LogController.createLog);
 
 apiRouter.get("/user/", UserController.getAllUser);
 apiRouter.get("/user/:userId", UserController.getOneUser);

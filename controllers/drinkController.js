@@ -26,7 +26,7 @@ const DrinkController = {
     }
   },
 
-  postDrink: async (req, res) => {
+  createDrink: async (req, res) => {
     try {
       const {brand, drink_name, temp, img, size, kcal, caffeine} = req.body;
       const newDrink = await Drink.create({
