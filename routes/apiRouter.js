@@ -13,6 +13,7 @@ apiRouter.get("/drink/search/:searchKeyword", DrinkController.getSearchDrink);
 apiRouter.get("/log", LogController.getAllLogs);
 apiRouter.get("/log/:logId", LogController.getOneLog);
 apiRouter.post("/log", LogController.createOneLog);
+apiRouter.delete("/log/:logId", LogController.deleteOneLog);
 
 apiRouter.get("/user/", UserController.getAllUser);
 apiRouter.get("/user/:userId", UserController.getOneUser);

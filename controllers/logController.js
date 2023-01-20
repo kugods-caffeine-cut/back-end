@@ -60,6 +60,15 @@ const LogController = {
       httpResponse.BAD_REQUEST(res, "", error);
     }
   },
+  deleteOneLog: async (req, res) => {
+    try {
+      const {logId} = req.params;
+      await Log.findByIdAndDelete(logId);
+      httpResponse.SUCCESS_OK(res, `id가 ${logId}인 log를 삭제했습니다.`, {});
+    } catch (error) {
+      httpResponse.BAD_REQUEST(res, "", error);
+    }
+  },
 };
 
 module.exports = LogController;
