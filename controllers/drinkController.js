@@ -68,10 +68,10 @@ const DrinkController = {
 
   // patchOneDrink: async (req, res) => {
   //   try {
-  //     const {drinkID} = req.params;
+  //     const {drinkId} = req.params;
   //     const {brand, drink_name, temp, img, size, kcal, caffeine} = req.body;
   //     const newDrink = await Drink.findByIdAndUpdate(
-  //       drinkID,
+  //       drinkId,
   //       {
   //         brand,
   //         drink_name,
@@ -91,11 +91,11 @@ const DrinkController = {
 
   // deleteOneDrink: async (req, res) => {
   //   try {
-  //     const {drinkID} = req.params;
-  //     await Drink.findByIdAndDelete(drinkID);
+  //     const {drinkId} = req.params;
+  //     await Drink.findByIdAndDelete(drinkId);
   //     httpResponse.SUCCESS_OK(
   //       res,
-  //       `id가 ${drinkID}인 drink를 삭제했습니다.`,
+  //       `id가 ${drinkId}인 drink를 삭제했습니다.`,
   //       {},
   //     );
   //   } catch (error) {
