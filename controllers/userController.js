@@ -52,7 +52,7 @@ const UserController = {
   getUserLogs: async (req, res) => {
     try {
       const {userId} = req.params;
-      const userLogs = await LogController.find({userId});
+      const userLogs = await Log.find({userId});
       httpResponse.SUCCESS_OK(res, "", userLogs);
     } catch (error) {
       httpResponse.BAD_REQUEST(res, "", error);
