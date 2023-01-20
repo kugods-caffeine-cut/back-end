@@ -48,7 +48,7 @@ const UserController = {
         {
           favorites: true,
         },
-      ).populate(favorites);
+      ).populate("favorites");
       httpResponse.SUCCESS_OK(res, "", favorites);
     } catch (error) {
       httpResponse.BAD_REQUEST(res, "", error);
@@ -71,7 +71,7 @@ const UserController = {
         const newUser = await User.create({
           kakaoId: kakaoId,
           kakaoObj: kakaoObj,
-          favorite: [],
+          favorites: [],
         });
         return httpResponse.SUCCESS_CREATED(res, "", newUser);
       } else {
