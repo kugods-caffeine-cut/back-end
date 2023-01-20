@@ -3,7 +3,6 @@ const {Size} = require("../model/Size");
 const {User} = require("../model/User");
 const {Log} = require("../model/Log");
 const {httpResponse} = require("../config/http-response");
-const LogController = require("./logController");
 
 const checkValidUser = async kakaoId => {
   try {
