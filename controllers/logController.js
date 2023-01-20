@@ -27,7 +27,7 @@ const LogController = {
   getOneLog: async (req, res) => {
     try {
       const {logId} = req.params;
-      const logInfo = await Drink.find(
+      const logInfo = await Log.findOne(
         {_id: logId},
         {
           _id: true,
