@@ -11,6 +11,8 @@ servers:
 tags:
   - name: drink
     description: 음료에 대한 항목입니다.
+  - name: user
+    description: 사용자에 대한 항목입니다.
 paths:
   /api/drink:
     get:
@@ -216,6 +218,171 @@ paths:
                           type: integer
                           default: 150
 
+  /api/user/:
+    get:
+      tags:
+        - user
+      summary: 모든 사용자 목록을 조회합니다.
+      description: 모든 사용자 목록을 조회합니다.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 200
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/user"
+
+    post:
+      tags:
+        - user
+      summary: 새로운 사용자 1명을 생성합니다.
+      description: 새로운 사용자 1명을 생성합니다.
+      requestBody:
+        description: 카카오 사용자 Object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/kakao_object"
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 200
+                  message:
+                    type: string
+                    default: "SUCCESS_CREATED"
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/user"
+        "400":
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 400
+                  message:
+                    type: string
+                    default: "BAD_REQUEST"
+                  error:
+                    type: object
+
+  /api/user/{userId}:
+    get:
+      tags:
+        - user
+      summary: 1명의 사용자를 조회합니다.
+      description: 1명의 사용자를 조회합니다.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: 사용자의 ObjectId(_id)
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 200
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/user"
+        "400":
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 400
+                  message:
+                    type: string
+                    default: "BAD_REQUEST"
+                  error:
+                    type: object
+    delete:
+      tags:
+        - user
+      summary: 1명의 사용자를 삭제합니다.
+      description: 1명의 사용자의 isDeleted 필드를 변경하여 soft delete합니다.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: 사용자의 ObjectId(_id)
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 200
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/user"
+        "400":
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 400
+                  message:
+                    type: string
+                    default: "BAD_REQUEST"
+                  error:
+                    type: object
+
 components:
   schemas:
     drink:
@@ -261,5 +428,103 @@ components:
             items:
               type: string
               default: "톨"
-
           default: [["톨", 12], ["그란데", 16]]
+    user:
+      type: object
+      properties:
+        _id:
+          type: string
+          default: "636f5fa258e81b16d1707b1c"
+        kakaoId:
+          type: string
+          default: "20112319"
+          description: asdasd
+        kakaoObj:
+          type: object
+          $ref: "#/components/schemas/kakao_object"
+        favorites:
+          type: array
+          items:
+            type: string
+            default: "636f5fa258e81b16d1707b1c"
+        isDeleted:
+          type: boolean
+          default: false
+        createdAt:
+          type: string
+          default: "20230111"
+        updatedAt:
+          type: string
+          default: "20230111"
+    kakao_object:
+      type: object
+      properties:
+        ageRange:
+          type: string
+          default: "null"
+        ageRangeNeedsAgreement:
+          type: boolean
+          default: false
+        birthday:
+          type: string
+          default: "null"
+        birthdayNeedsAgreement:
+          type: boolean
+          default: false
+        birthdayType:
+          type: string
+          default: "null"
+        birthyear:
+          type: string
+          default: "null"
+        birthyearNeedsAgreement:
+          type: boolean
+          default: false
+        email:
+          type: string
+          default: "hived@naver.com"
+        emailNeedsAgreement:
+          type: boolean
+          default: false
+        gender:
+          type: string
+          default: "null"
+        genderNeedsAgreement:
+          type: boolean
+          default: false
+        id:
+          type: string
+          default: "2614225007"
+        isEmailValid:
+          type: boolean
+          default: true
+        isEmailVerified:
+          type: boolean
+          default: true
+        isKorean:
+          type: boolean
+          default: false
+        isKoreanNeedsAgreement:
+          type: boolean
+          default: false
+        name:
+          type: string
+          default: "null"
+        nickname:
+          type: string
+          default: "규민"
+        phoneNumber:
+          type: string
+          default: "null"
+        phoneNumberNeedsAgreement:
+          type: boolean
+          default: false
+        profileImageUrl:
+          type: string
+          default: null
+        profileNeedsAgreement:
+          type: boolean
+          default: false
+        thumbnailImageUrl:
+          type: string
+          default: null
