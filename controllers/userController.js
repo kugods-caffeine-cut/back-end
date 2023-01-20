@@ -1,5 +1,6 @@
 const {User} = require("../model/User");
 const {httpResponse} = require("../config/http-response");
+const LogController = require("./logController");
 
 const checkValidUser = async kakaoId => {
   try {
@@ -49,6 +50,15 @@ const UserController = {
         },
       ).populate(favorites);
       httpResponse.SUCCESS_OK(res, "", favorites);
+    } catch (error) {
+      httpResponse.BAD_REQUEST(res, "", error);
+    }
+  },
+  getUserLogs: async (req, res) => {
+    try {
+      const {userId} = req.params;
+      const userLogs = await LogController.find({userId});
+      httpResponse.SUCCESS_OK(res, "", userLogs);
     } catch (error) {
       httpResponse.BAD_REQUEST(res, "", error);
     }
