@@ -15,7 +15,7 @@ apiRouter.get("/log/:logId", LogController.getOneLog);
 apiRouter.post("/log", LogController.createOneLog);
 apiRouter.delete("/log/:logId", LogController.deleteOneLog);
 
-apiRouter.get("/user/", UserController.getAllUser);
+apiRouter.get("/user", UserController.getAllUser);
 apiRouter.get("/user/:userId", UserController.getOneUser);
 apiRouter.get("/user/favorite/:userId", UserController.getFavoriteDrinks);
 apiRouter.get("/user/log/:userId", UserController.getUserLogs);
