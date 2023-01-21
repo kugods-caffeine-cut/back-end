@@ -65,12 +65,12 @@ paths:
     get:
       tags:
         - drink
-      summary: 특정 음료 1개를 ObjectID로 조회합니다
-      description: 특정 음료 1개를 ObjectID로 조회합니다
+      summary: 특정 음료 1개를 ObjectId로 조회합니다
+      description: 특정 음료 1개를 ObjectId로 조회합니다
       parameters:
         - name: drinkId
           in: path
-          description: 조회할 음료의 ID
+          description: 조회할 음료의 Id
           required: true
           schema:
             type: string
@@ -117,7 +117,7 @@ paths:
                         type: integer
                         default: 150
         "400":
-          description: Invalid Object ID Error
+          description: Invalid Object Id Error
           content:
             application/json:
               schema:
