@@ -11,6 +11,10 @@ servers:
 tags:
   - name: drink
     description: 음료에 대한 항목입니다.
+  - name: log
+    description: 로그에 대한 항목입니다.
+  - name: user
+    description: 사용자에 대한 항목입니다.
 paths:
   /api/drink:
     get:
@@ -215,6 +219,52 @@ paths:
                         caffeine:
                           type: integer
                           default: 150
+
+  /api/log:
+    get:
+      tags:
+        - log
+
+    post:
+      tags:
+        - log
+
+/api/log/{logId}:
+  get:
+    tags:
+      - log
+
+  delete:
+    tags:
+      - log
+
+/user:
+  get:
+    tags:
+      - user
+
+  post:
+    tags:
+      - user
+
+/user/{userId}:
+  get:
+    tags:
+      - user
+
+  delete:
+    tags:
+      - user
+
+/user/favorite/{userId}:
+  get:
+    tags:
+      - user
+
+/user/log/{userId}:
+  get:
+    tags:
+      - user
 
 components:
   schemas:
