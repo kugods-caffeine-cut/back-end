@@ -434,3 +434,21 @@ components:
               default: "톨"
 
           default: [["톨", 12], ["그란데", 16]]
+    user:
+      type: object
+      properties:
+        _id:
+          type: string
+          default: "63ca8e94be7081de460be06c"
+        kakaoId:
+          type: string
+          default: "2614225007"
+        kakaoObj:
+          type: object
+        favorites:
+          type: list
+          default: ["636f5f1198dec033db2a4bc7", "636f5f1198dec033db2a4bc6"]
+        isDeleted:
+          type: boolean
+          default: false
+
