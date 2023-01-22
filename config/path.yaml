@@ -224,10 +224,131 @@ paths:
     get:
       tags:
         - log
-
+      summary: 모든 로그를 조회합니다.
+      description: 모든 로그 목록을 조회합니다.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "200"
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          default: "63ca91f7be7081de460be076"
+                        userId:
+                          type: string
+                          default: "63ca8e94be7081de460be06c"
+                        drinkId:
+                          type: string
+                          default: "636f5f1198dec033db2a4bc6"
+                        size:
+                          type: string
+                          default: "그란데"
+                        num:
+                          type: integer
+                          default: 1
+                        caffeine:
+                          type: integer
+                          default: 100
+                        option:
+                          type: object
+                          default:
+                            {temp: "ICE", addshot: 1, additional: "decaf"}
     post:
       tags:
         - log
+      summary: 로그를 하나 생성합니다.
+      description: 로그를 하나 생성합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: "63ca8e94be7081de460be06c"
+                drinkId:
+                  type: string
+                  example: "636f5f1198dec033db2a4bc8"
+                size:
+                  type: string
+                  example: "그란데"
+                num:
+                  type: integer
+                  example: 3
+                caffeine:
+                  type: integer
+                  example: 100
+                option:
+                  type: object
+                  properties:
+                    temp:
+                      type: string
+                      example: "ICE"
+                    addshot:
+                      type: integer
+                      example: 1
+                    additional:
+                      type: string
+                      example: "decaf"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "200"
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          default: "63cc8b59d30069ae926332b8"
+                        userId:
+                          type: string
+                          default: "63ca8e94be7081de460be06c"
+                        drinkId:
+                          type: string
+                          default: "636f5f1198dec033db2a4bc8"
+                        size:
+                          type: string
+                          defalut: "그란데"
+                        num:
+                          type: integer
+                          default: 3
+                        caffeine:
+                          type: integer
+                          default: 100
+                        createdAt:
+                          type: string
+                          default: "2023-01-22T01:03:21.624Z"
+                        updatedAt:
+                          type: string
+                          default: "2023-01-22T01:03:21.624Z"
 
 /api/log/{logId}:
   get:
