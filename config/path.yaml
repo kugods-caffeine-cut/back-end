@@ -452,3 +452,36 @@ components:
           type: boolean
           default: false
 
+    log:
+      type: object
+      properties:
+        _id:
+          type: string
+          default: "63ca91f7be7081de460be076"
+        userId:
+          type: string
+          default: "63ca8e94be7081de460be06c"
+        drinkId:
+          type: string
+          default: "636f5f1198dec033db2a4bc6"
+        size:
+          type: string
+          default: "레귤러"
+        num:
+          type: integer
+          default: "1"
+        caffeine:
+          type: integer
+          default: 0
+        option:
+          type: object
+          properties:
+            temp:
+              type: string
+              default: "ICE"
+            addshot:
+              type: number
+              default: 1
+            additional:
+              type: string
+              default: "decaf"
