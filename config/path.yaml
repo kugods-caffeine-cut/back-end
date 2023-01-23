@@ -820,6 +820,59 @@ paths:
   get:
     tags:
       - user
+    summary: 특정 사용자 1명의 로그 목록을 사용자의 ObjectId로 조회합니다
+    description: 특정 사용자 1명의 로그 목록을 사용자의 ObjectId로 조회합니다
+    parameters:
+      - name: userId
+        in: path
+        description: 조회할 사용자의 Id
+        required: true
+        schema:
+          type: string
+          format: ObjectId
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        default: "63cc8b59d30069ae926332b8"
+                      userId:
+                        type: string
+                        default: "63ca8e94be7081de460be06c"
+                      drinkId:
+                        type: string
+                        default: "636f5f1198dec033db2a4bc8"
+                      size:
+                        type: string
+                        defalut: "그란데"
+                      num:
+                        type: integer
+                        default: 3
+                      caffeine:
+                        type: integer
+                        default: 100
+                      createdAt:
+                        type: string
+                        default: "2023-01-22T01:03:21.624Z"
+                      updatedAt:
+                        type: string
+                        default: "2023-01-22T01:03:21.624Z"
 
 components:
   schemas:
