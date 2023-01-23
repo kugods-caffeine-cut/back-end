@@ -611,10 +611,146 @@ paths:
   get:
     tags:
       - user
+    summary: 특정 사용자 1명을 ObjectId로 조회합니다
+    description: 특정 사용자 1명을 ObjectId로 조회합니다
+    parameters:
+      - name: userId
+        in: path
+        description: 조회할 사용자의 Id
+        required: true
+        schema:
+          type: string
+          format: ObjectId
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      default: "63ca8e94be7081de460be06c"
+                    kakaoId:
+                      type: string
+                      default: 2614225007
+                    kakaoObj:
+                      type: object
+                      default:
+                        {
+                          "ageRange": "null",
+                          "ageRangeNeedsAgreement": false,
+                          "birthday": "null",
+                          "birthdayNeedsAgreement": false,
+                          "birthdayType": "null",
+                          "birthyear": "null",
+                          "birthyearNeedsAgreement": false,
+                          "email": "hived@naver.com",
+                          "emailNeedsAgreement": false,
+                          "gender": "null",
+                          "genderNeedsAgreement": false,
+                          "id": "2614225007",
+                          "isEmailValid": true,
+                          "isEmailVerified": true,
+                          "isKorean": false,
+                          "isKoreanNeedsAgreement": false,
+                          "name": "null",
+                          "nickname": "규민",
+                          "phoneNumber": "null",
+                          "phoneNumberNeedsAgreement": false,
+                          "profileImageUrl": null,
+                          "profileNeedsAgreement": false,
+                          "thumbnailImageUrl": null,
+                        }
+                    favorites:
+                      type: list
+                      default:
+                        ["636f5f1198dec033db2a4bc7", "636f5f1198dec033db2a4bc6"]
+                    isDeleted:
+                      type: boolean
+                      default: false
 
   delete:
     tags:
       - user
+    summary: 특정 사용자 1명을 ObjectId로 삭제합니다
+    description: 특정 사용자 1명을 ObjectId로 삭제합니다
+    parameters:
+      - name: userId
+        in: path
+        description: 삭제할 사용자의 Id
+        required: true
+        schema:
+          type: string
+          format: ObjectId
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      default: "63ca8e94be7081de460be06c"
+                    kakaoId:
+                      type: string
+                      default: 2614225007
+                    kakaoObj:
+                      type: object
+                      default:
+                        {
+                          "ageRange": "null",
+                          "ageRangeNeedsAgreement": false,
+                          "birthday": "null",
+                          "birthdayNeedsAgreement": false,
+                          "birthdayType": "null",
+                          "birthyear": "null",
+                          "birthyearNeedsAgreement": false,
+                          "email": "hived@naver.com",
+                          "emailNeedsAgreement": false,
+                          "gender": "null",
+                          "genderNeedsAgreement": false,
+                          "id": "2614225007",
+                          "isEmailValid": true,
+                          "isEmailVerified": true,
+                          "isKorean": false,
+                          "isKoreanNeedsAgreement": false,
+                          "name": "null",
+                          "nickname": "규민",
+                          "phoneNumber": "null",
+                          "phoneNumberNeedsAgreement": false,
+                          "profileImageUrl": null,
+                          "profileNeedsAgreement": false,
+                          "thumbnailImageUrl": null,
+                        }
+                    favorites:
+                      type: list
+                      default:
+                        ["636f5f1198dec033db2a4bc7", "636f5f1198dec033db2a4bc6"]
+                    isDeleted:
+                      type: boolean
+                      default: true
 
 /user/favorite/{userId}:
   get:
