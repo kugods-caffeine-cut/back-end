@@ -321,34 +321,32 @@ paths:
                     type: string
                     default: "SUCCESS_OK"
                   data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        _id:
-                          type: string
-                          default: "63cc8b59d30069ae926332b8"
-                        userId:
-                          type: string
-                          default: "63ca8e94be7081de460be06c"
-                        drinkId:
-                          type: string
-                          default: "636f5f1198dec033db2a4bc8"
-                        size:
-                          type: string
-                          defalut: "그란데"
-                        num:
-                          type: integer
-                          default: 3
-                        caffeine:
-                          type: integer
-                          default: 100
-                        createdAt:
-                          type: string
-                          default: "2023-01-22T01:03:21.624Z"
-                        updatedAt:
-                          type: string
-                          default: "2023-01-22T01:03:21.624Z"
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        default: "63cc8b59d30069ae926332b8"
+                      userId:
+                        type: string
+                        default: "63ca8e94be7081de460be06c"
+                      drinkId:
+                        type: string
+                        default: "636f5f1198dec033db2a4bc8"
+                      size:
+                        type: string
+                        defalut: "그란데"
+                      num:
+                        type: integer
+                        default: 3
+                      caffeine:
+                        type: integer
+                        default: 100
+                      createdAt:
+                        type: string
+                        default: "2023-01-22T01:03:21.624Z"
+                      updatedAt:
+                        type: string
+                        default: "2023-01-22T01:03:21.624Z"
 
 /api/log/{logId}:
   get:
