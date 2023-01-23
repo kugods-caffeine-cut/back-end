@@ -83,6 +83,28 @@ const UserController = {
       return httpResponse.BAD_REQUEST(res, "", error);
     }
   },
+  addOneFavoriteDrink: async (req, res) => {
+    try {
+      const {userId} = req.params;
+      const {newFavoriteDrinkId} = req.body;
+      const originalUser = await User.findById(userId);
+      const favorites = originalUser.favorites;
+      if (favorites.includes(newFavoriteDrinkId)) {
+        return httpResponse.SUCCESS_CREATED(res, "", originalUser);
+      } else {
+        favorites.push(newFavoriteDrinkId);
+        const newUser = await User.findByIdAndUpdate(
+          userId,
+          {favorites},
+          {new: true},
+        );
+        return httpResponse.SUCCESS_CREATED(res, "", newUser);
+      }
+    } catch (error) {
+      console.log(error);
+      return httpResponse.BAD_REQUEST(res, "", error);
+    }
+  },
   deleteOneUser: async (req, res) => {
     try {
       const {userId} = req.params;

@@ -815,6 +815,89 @@ paths:
                       updatedAt:
                         type: string
                         default: "2022-11-12T08:53:37.282Z"
+  post:
+    tags:
+      - user
+    summary: ObjectId에 대한 특정 사용자 1명의 즐겨찾기 목록에 음료를 1개 추가합니다.
+    description: ObjectId에 대한 특정 사용자 1명의 즐겨찾기 목록에 음료를 1개 추가합니다.
+    parameters:
+      - name: userId
+        in: path
+        description: 즐겨찾기 목록에 음료를 1개 추가할 사용자의 Id
+        required: true
+        schema:
+          type: string
+          format: ObjectId
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              newFavoriteDrinkId:
+                type: string
+                example: "636f5f1198dec033db2a4bc8"
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      default: "63ca8e94be7081de460be06c"
+                    kakaoId:
+                      type: string
+                      default: "2614225007"
+                    kakaoObj:
+                      type: object
+                      default:
+                        {
+                          "ageRange": "null",
+                          "ageRangeNeedsAgreement": false,
+                          "birthday": "null",
+                          "birthdayNeedsAgreement": false,
+                          "birthdayType": "null",
+                          "birthyear": "null",
+                          "birthyearNeedsAgreement": false,
+                          "email": "hived@naver.com",
+                          "emailNeedsAgreement": false,
+                          "gender": "null",
+                          "genderNeedsAgreement": false,
+                          "id": "2614225007",
+                          "isEmailValid": true,
+                          "isEmailVerified": true,
+                          "isKorean": false,
+                          "isKoreanNeedsAgreement": false,
+                          "name": "null",
+                          "nickname": "규민",
+                          "phoneNumber": "null",
+                          "phoneNumberNeedsAgreement": false,
+                          "profileImageUrl": null,
+                          "profileNeedsAgreement": false,
+                          "thumbnailImageUrl": null,
+                        }
+                    favorites:
+                      type: list
+                      default: ["636f5f1198dec033db2a4bc8"]
+                    isDeleted:
+                      type: boolean
+                      default: false
+                    updatedAt:
+                      type: string
+                      default: "2023-01-23T07:11:16.662Z"
 
 /user/log/{userId}:
   get:

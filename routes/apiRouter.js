@@ -20,6 +20,7 @@ apiRouter.get("/user/:userId", UserController.getOneUser);
 apiRouter.get("/user/favorite/:userId", UserController.getFavoriteDrinks);
 apiRouter.get("/user/log/:userId", UserController.getUserLogs);
 apiRouter.post("/user", UserController.createOneUser);
+apiRouter.patch("/user/favorite/:userId", UserController.addOneFavoriteDrink);
 apiRouter.delete("/user/:userId", UserController.deleteOneUser);
 
 module.exports = {apiRouter};
