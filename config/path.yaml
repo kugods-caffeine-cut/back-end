@@ -437,10 +437,177 @@ paths:
   get:
     tags:
       - user
-
+    summary: 모든 사용자를 조회합니다.
+    description: 모든 사용자 목록을 조회합니다.
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        default: "63ca8e94be7081de460be06c"
+                      kakaoId:
+                        type: string
+                        default: "2614225007"
+                      kakaoObj:
+                        type: object
+                        default:
+                          {
+                            "ageRange": "null",
+                            "ageRangeNeedsAgreement": false,
+                            "birthday": "null",
+                            "birthdayNeedsAgreement": false,
+                            "birthdayType": "null",
+                            "birthyear": "null",
+                            "birthyearNeedsAgreement": false,
+                            "email": "hived@naver.com",
+                            "emailNeedsAgreement": false,
+                            "gender": "null",
+                            "genderNeedsAgreement": false,
+                            "id": "2614225007",
+                            "isEmailValid": true,
+                            "isEmailVerified": true,
+                            "isKorean": false,
+                            "isKoreanNeedsAgreement": false,
+                            "name": "null",
+                            "nickname": "규민",
+                            "phoneNumber": "null",
+                            "phoneNumberNeedsAgreement": false,
+                            "profileImageUrl": null,
+                            "profileNeedsAgreement": false,
+                            "thumbnailImageUrl": null,
+                          }
+                      favorites:
+                        type: list
+                        default:
+                          [
+                            "636f5f1198dec033db2a4bc7",
+                            "636f5f1198dec033db2a4bc6",
+                          ]
+                      isDeleted:
+                        type: boolean
+                        default: false
   post:
     tags:
       - user
+    summary: 사용자를 한 명 생성합니다.
+    description: 사용자를 한 명 생성합니다.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              kakaoId:
+                type: string
+                example: "2614225007"
+              kakaoObj:
+                type: object
+                example:
+                  {
+                    "ageRange": "null",
+                    "ageRangeNeedsAgreement": false,
+                    "birthday": "null",
+                    "birthdayNeedsAgreement": false,
+                    "birthdayType": "null",
+                    "birthyear": "null",
+                    "birthyearNeedsAgreement": false,
+                    "email": "hived@naver.com",
+                    "emailNeedsAgreement": false,
+                    "gender": "null",
+                    "genderNeedsAgreement": false,
+                    "id": "2614225007",
+                    "isEmailValid": true,
+                    "isEmailVerified": true,
+                    "isKorean": false,
+                    "isKoreanNeedsAgreement": false,
+                    "name": "null",
+                    "nickname": "규민",
+                    "phoneNumber": "null",
+                    "phoneNumberNeedsAgreement": false,
+                    "profileImageUrl": null,
+                    "profileNeedsAgreement": false,
+                    "thumbnailImageUrl": null,
+                  }
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      default: "63ca8e94be7081de460be06c"
+                    kakaoId:
+                      type: string
+                      default: "2614225007"
+                    kakaoObj:
+                      type: object
+                      default:
+                        {
+                          "ageRange": "null",
+                          "ageRangeNeedsAgreement": false,
+                          "birthday": "null",
+                          "birthdayNeedsAgreement": false,
+                          "birthdayType": "null",
+                          "birthyear": "null",
+                          "birthyearNeedsAgreement": false,
+                          "email": "hived@naver.com",
+                          "emailNeedsAgreement": false,
+                          "gender": "null",
+                          "genderNeedsAgreement": false,
+                          "id": "2614225007",
+                          "isEmailValid": true,
+                          "isEmailVerified": true,
+                          "isKorean": false,
+                          "isKoreanNeedsAgreement": false,
+                          "name": "null",
+                          "nickname": "규민",
+                          "phoneNumber": "null",
+                          "phoneNumberNeedsAgreement": false,
+                          "profileImageUrl": null,
+                          "profileNeedsAgreement": false,
+                          "thumbnailImageUrl": null,
+                        }
+                    favorites:
+                      type: list
+                      default: []
+                    isDeleted:
+                      type: boolean
+                      default: false
+                    createdAt:
+                      type: string
+                      default: "2023-01-23T04:38:49.899Z"
+                    updatedAt:
+                      type: string
+                      default: "2023-01-23T04:38:49.899Z"
 
 /user/{userId}:
   get:
