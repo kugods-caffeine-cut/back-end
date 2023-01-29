@@ -18,7 +18,7 @@ const LogController = {
           caffeine: true,
           option: true,
         },
-      );
+      ).populate("drinkId");
       return httpResponse.SUCCESS_OK(res, "", logsInfo);
     } catch (error) {
       return httpResponse.BAD_REQUEST(res, "", error);
@@ -38,7 +38,7 @@ const LogController = {
           caffeine: true,
           option: true,
         },
-      );
+      ).populate("drinkId");
       httpResponse.SUCCESS_OK(res, "", logInfo);
     } catch (error) {
       httpResponse.BAD_REQUEST(res, "", error);
