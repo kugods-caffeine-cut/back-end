@@ -1,4 +1,7 @@
+const {Drink} = require("../model/Drink");
+const {Size} = require("../model/Size");
 const {User} = require("../model/User");
+const {Log} = require("../model/Log");
 const {httpResponse} = require("../config/http-response");
 
 const checkValidUser = async kakaoId => {
@@ -42,13 +45,17 @@ const UserController = {
   getFavoriteDrinks: async (req, res) => {
     try {
       const {userId} = req.params;
-      const {favorites} = await User.find(
-        {_id: userId},
-        {
-          favorites: true,
-        },
-      ).populate(favorites);
+      const {favorites} = await User.findById(userId).populate("favorites");
       httpResponse.SUCCESS_OK(res, "", favorites);
+    } catch (error) {
+      httpResponse.BAD_REQUEST(res, "", error);
+    }
+  },
+  getUserLogs: async (req, res) => {
+    try {
+      const {userId} = req.params;
+      const userLogs = await Log.find({userId});
+      httpResponse.SUCCESS_OK(res, "", userLogs);
     } catch (error) {
       httpResponse.BAD_REQUEST(res, "", error);
     }
@@ -61,7 +68,7 @@ const UserController = {
         const newUser = await User.create({
           kakaoId: kakaoId,
           kakaoObj: kakaoObj,
-          favorite: [],
+          favorites: [],
         });
         return httpResponse.SUCCESS_CREATED(res, "", newUser);
       } else {
@@ -70,6 +77,28 @@ const UserController = {
           "user already exists with this id",
           {},
         );
+      }
+    } catch (error) {
+      console.log(error);
+      return httpResponse.BAD_REQUEST(res, "", error);
+    }
+  },
+  addOneFavoriteDrink: async (req, res) => {
+    try {
+      const {userId} = req.params;
+      const {newFavoriteDrinkId} = req.body;
+      const originalUser = await User.findById(userId);
+      const favorites = originalUser.favorites;
+      if (favorites.includes(newFavoriteDrinkId)) {
+        return httpResponse.SUCCESS_CREATED(res, "", originalUser);
+      } else {
+        favorites.push(newFavoriteDrinkId);
+        const newUser = await User.findByIdAndUpdate(
+          userId,
+          {favorites},
+          {new: true},
+        );
+        return httpResponse.SUCCESS_CREATED(res, "", newUser);
       }
     } catch (error) {
       console.log(error);

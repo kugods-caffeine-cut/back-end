@@ -27,7 +27,7 @@ const LogController = {
   getOneLog: async (req, res) => {
     try {
       const {logId} = req.params;
-      const logInfo = await Drink.find(
+      const logInfo = await Log.findOne(
         {_id: logId},
         {
           _id: true,
@@ -44,7 +44,7 @@ const LogController = {
       httpResponse.BAD_REQUEST(res, "", error);
     }
   },
-  postLog: async (req, res) => {
+  createOneLog: async (req, res) => {
     try {
       const {userId, drinkId, size, num, caffeine, option} = req.body;
       const newLog = await Log.create({
@@ -56,6 +56,15 @@ const LogController = {
         option,
       });
       httpResponse.SUCCESS_OK(res, "", newLog);
+    } catch (error) {
+      httpResponse.BAD_REQUEST(res, "", error);
+    }
+  },
+  deleteOneLog: async (req, res) => {
+    try {
+      const {logId} = req.params;
+      await Log.findByIdAndDelete(logId);
+      httpResponse.SUCCESS_OK(res, `id가 ${logId}인 log를 삭제했습니다.`, {});
     } catch (error) {
       httpResponse.BAD_REQUEST(res, "", error);
     }

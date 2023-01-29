@@ -11,6 +11,10 @@ servers:
 tags:
   - name: drink
     description: 음료에 대한 항목입니다.
+  - name: log
+    description: 로그에 대한 항목입니다.
+  - name: user
+    description: 사용자에 대한 항목입니다.
 paths:
   /api/drink:
     get:
@@ -65,12 +69,12 @@ paths:
     get:
       tags:
         - drink
-      summary: 특정 음료 1개를 ObjectID로 조회합니다
-      description: 특정 음료 1개를 ObjectID로 조회합니다
+      summary: 특정 음료 1개를 ObjectId로 조회합니다
+      description: 특정 음료 1개를 ObjectId로 조회합니다
       parameters:
         - name: drinkId
           in: path
-          description: 조회할 음료의 ID
+          description: 조회할 음료의 Id
           required: true
           schema:
             type: string
@@ -117,7 +121,7 @@ paths:
                         type: integer
                         default: 150
         "400":
-          description: Invalid Object ID Error
+          description: Invalid Object Id Error
           content:
             application/json:
               schema:
@@ -216,6 +220,743 @@ paths:
                           type: integer
                           default: 150
 
+  /api/log:
+    get:
+      tags:
+        - log
+      summary: 모든 로그를 조회합니다.
+      description: 모든 로그 목록을 조회합니다.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "200"
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          default: "63ca91f7be7081de460be076"
+                        userId:
+                          type: string
+                          default: "63ca8e94be7081de460be06c"
+                        drinkId:
+                          type: string
+                          default: "636f5f1198dec033db2a4bc6"
+                        size:
+                          type: string
+                          default: "그란데"
+                        num:
+                          type: integer
+                          default: 1
+                        caffeine:
+                          type: integer
+                          default: 100
+                        option:
+                          type: object
+                          default:
+                            {temp: "ICE", addshot: 1, additional: "decaf"}
+    post:
+      tags:
+        - log
+      summary: 로그를 하나 생성합니다.
+      description: 로그를 하나 생성합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: "63ca8e94be7081de460be06c"
+                drinkId:
+                  type: string
+                  example: "636f5f1198dec033db2a4bc8"
+                size:
+                  type: string
+                  example: "그란데"
+                num:
+                  type: integer
+                  example: 3
+                caffeine:
+                  type: integer
+                  example: 100
+                option:
+                  type: object
+                  properties:
+                    temp:
+                      type: string
+                      example: "ICE"
+                    addshot:
+                      type: integer
+                      example: 1
+                    additional:
+                      type: string
+                      example: "decaf"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "200"
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        default: "63cc8b59d30069ae926332b8"
+                      userId:
+                        type: string
+                        default: "63ca8e94be7081de460be06c"
+                      drinkId:
+                        type: string
+                        default: "636f5f1198dec033db2a4bc8"
+                      size:
+                        type: string
+                        defalut: "그란데"
+                      num:
+                        type: integer
+                        default: 3
+                      caffeine:
+                        type: integer
+                        default: 100
+                      createdAt:
+                        type: string
+                        default: "2023-01-22T01:03:21.624Z"
+                      updatedAt:
+                        type: string
+                        default: "2023-01-22T01:03:21.624Z"
+
+/api/log/{logId}:
+  get:
+    tags:
+      - log
+    summary: 특정 로그 1개를 ObjectId로 조회합니다
+    description: 특정 로그 1개를 ObjectId로 조회합니다
+    parameters:
+      - name: logId
+        in: path
+        description: 조회할 로그의 Id
+        required: true
+        schema:
+          type: string
+          format: ObjectId
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      default: "63ca91f7be7081de460be076"
+                    userId:
+                      type: string
+                      default: "63ca8e94be7081de460be06c"
+                    drinkId:
+                      type: string
+                      default: "636f5f1198dec033db2a4bc6"
+                    size:
+                      type: string
+                      default: "레귤러"
+                    num:
+                      type: integer
+                      default: 1
+                    caffeine:
+                      type: integer
+                      default: 0
+                    option:
+                      type: object
+                      default: {temp: "ICE", addshot: 1, additional: "decaf"}
+  delete:
+    tags:
+      - log
+    summary: 특정 로그 1개를 ObjectId로 삭제합니다
+    description: 특정 로그 1개를 ObjectId로 삭제합니다
+    parameters:
+      - name: logId
+        in: path
+        description: 삭제할 로그의 Id
+        required: true
+        schema:
+          type: string
+          format: ObjectId
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: string
+                  example: "id가 63cbd7064475043b0050b5db인 log를 삭제했습니다."
+
+/user:
+  get:
+    tags:
+      - user
+    summary: 모든 사용자를 조회합니다.
+    description: 모든 사용자 목록을 조회합니다.
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        default: "63ca8e94be7081de460be06c"
+                      kakaoId:
+                        type: string
+                        default: "2614225007"
+                      kakaoObj:
+                        type: object
+                        default:
+                          {
+                            "ageRange": "null",
+                            "ageRangeNeedsAgreement": false,
+                            "birthday": "null",
+                            "birthdayNeedsAgreement": false,
+                            "birthdayType": "null",
+                            "birthyear": "null",
+                            "birthyearNeedsAgreement": false,
+                            "email": "hived@naver.com",
+                            "emailNeedsAgreement": false,
+                            "gender": "null",
+                            "genderNeedsAgreement": false,
+                            "id": "2614225007",
+                            "isEmailValid": true,
+                            "isEmailVerified": true,
+                            "isKorean": false,
+                            "isKoreanNeedsAgreement": false,
+                            "name": "null",
+                            "nickname": "규민",
+                            "phoneNumber": "null",
+                            "phoneNumberNeedsAgreement": false,
+                            "profileImageUrl": null,
+                            "profileNeedsAgreement": false,
+                            "thumbnailImageUrl": null,
+                          }
+                      favorites:
+                        type: list
+                        default:
+                          [
+                            "636f5f1198dec033db2a4bc7",
+                            "636f5f1198dec033db2a4bc6",
+                          ]
+                      isDeleted:
+                        type: boolean
+                        default: false
+  post:
+    tags:
+      - user
+    summary: 사용자를 한 명 생성합니다.
+    description: 사용자를 한 명 생성합니다.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              kakaoId:
+                type: string
+                example: "2614225007"
+              kakaoObj:
+                type: object
+                example:
+                  {
+                    "ageRange": "null",
+                    "ageRangeNeedsAgreement": false,
+                    "birthday": "null",
+                    "birthdayNeedsAgreement": false,
+                    "birthdayType": "null",
+                    "birthyear": "null",
+                    "birthyearNeedsAgreement": false,
+                    "email": "hived@naver.com",
+                    "emailNeedsAgreement": false,
+                    "gender": "null",
+                    "genderNeedsAgreement": false,
+                    "id": "2614225007",
+                    "isEmailValid": true,
+                    "isEmailVerified": true,
+                    "isKorean": false,
+                    "isKoreanNeedsAgreement": false,
+                    "name": "null",
+                    "nickname": "규민",
+                    "phoneNumber": "null",
+                    "phoneNumberNeedsAgreement": false,
+                    "profileImageUrl": null,
+                    "profileNeedsAgreement": false,
+                    "thumbnailImageUrl": null,
+                  }
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      default: "63ca8e94be7081de460be06c"
+                    kakaoId:
+                      type: string
+                      default: "2614225007"
+                    kakaoObj:
+                      type: object
+                      default:
+                        {
+                          "ageRange": "null",
+                          "ageRangeNeedsAgreement": false,
+                          "birthday": "null",
+                          "birthdayNeedsAgreement": false,
+                          "birthdayType": "null",
+                          "birthyear": "null",
+                          "birthyearNeedsAgreement": false,
+                          "email": "hived@naver.com",
+                          "emailNeedsAgreement": false,
+                          "gender": "null",
+                          "genderNeedsAgreement": false,
+                          "id": "2614225007",
+                          "isEmailValid": true,
+                          "isEmailVerified": true,
+                          "isKorean": false,
+                          "isKoreanNeedsAgreement": false,
+                          "name": "null",
+                          "nickname": "규민",
+                          "phoneNumber": "null",
+                          "phoneNumberNeedsAgreement": false,
+                          "profileImageUrl": null,
+                          "profileNeedsAgreement": false,
+                          "thumbnailImageUrl": null,
+                        }
+                    favorites:
+                      type: list
+                      default: []
+                    isDeleted:
+                      type: boolean
+                      default: false
+                    createdAt:
+                      type: string
+                      default: "2023-01-23T04:38:49.899Z"
+                    updatedAt:
+                      type: string
+                      default: "2023-01-23T04:38:49.899Z"
+
+/user/{userId}:
+  get:
+    tags:
+      - user
+    summary: 특정 사용자 1명을 ObjectId로 조회합니다
+    description: 특정 사용자 1명을 ObjectId로 조회합니다
+    parameters:
+      - name: userId
+        in: path
+        description: 조회할 사용자의 Id
+        required: true
+        schema:
+          type: string
+          format: ObjectId
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      default: "63ca8e94be7081de460be06c"
+                    kakaoId:
+                      type: string
+                      default: 2614225007
+                    kakaoObj:
+                      type: object
+                      default:
+                        {
+                          "ageRange": "null",
+                          "ageRangeNeedsAgreement": false,
+                          "birthday": "null",
+                          "birthdayNeedsAgreement": false,
+                          "birthdayType": "null",
+                          "birthyear": "null",
+                          "birthyearNeedsAgreement": false,
+                          "email": "hived@naver.com",
+                          "emailNeedsAgreement": false,
+                          "gender": "null",
+                          "genderNeedsAgreement": false,
+                          "id": "2614225007",
+                          "isEmailValid": true,
+                          "isEmailVerified": true,
+                          "isKorean": false,
+                          "isKoreanNeedsAgreement": false,
+                          "name": "null",
+                          "nickname": "규민",
+                          "phoneNumber": "null",
+                          "phoneNumberNeedsAgreement": false,
+                          "profileImageUrl": null,
+                          "profileNeedsAgreement": false,
+                          "thumbnailImageUrl": null,
+                        }
+                    favorites:
+                      type: list
+                      default:
+                        ["636f5f1198dec033db2a4bc7", "636f5f1198dec033db2a4bc6"]
+                    isDeleted:
+                      type: boolean
+                      default: false
+
+  delete:
+    tags:
+      - user
+    summary: 특정 사용자 1명을 ObjectId로 삭제합니다
+    description: 특정 사용자 1명을 ObjectId로 삭제합니다
+    parameters:
+      - name: userId
+        in: path
+        description: 삭제할 사용자의 Id
+        required: true
+        schema:
+          type: string
+          format: ObjectId
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      default: "63ca8e94be7081de460be06c"
+                    kakaoId:
+                      type: string
+                      default: 2614225007
+                    kakaoObj:
+                      type: object
+                      default:
+                        {
+                          "ageRange": "null",
+                          "ageRangeNeedsAgreement": false,
+                          "birthday": "null",
+                          "birthdayNeedsAgreement": false,
+                          "birthdayType": "null",
+                          "birthyear": "null",
+                          "birthyearNeedsAgreement": false,
+                          "email": "hived@naver.com",
+                          "emailNeedsAgreement": false,
+                          "gender": "null",
+                          "genderNeedsAgreement": false,
+                          "id": "2614225007",
+                          "isEmailValid": true,
+                          "isEmailVerified": true,
+                          "isKorean": false,
+                          "isKoreanNeedsAgreement": false,
+                          "name": "null",
+                          "nickname": "규민",
+                          "phoneNumber": "null",
+                          "phoneNumberNeedsAgreement": false,
+                          "profileImageUrl": null,
+                          "profileNeedsAgreement": false,
+                          "thumbnailImageUrl": null,
+                        }
+                    favorites:
+                      type: list
+                      default:
+                        ["636f5f1198dec033db2a4bc7", "636f5f1198dec033db2a4bc6"]
+                    isDeleted:
+                      type: boolean
+                      default: true
+
+/user/favorite/{userId}:
+  get:
+    tags:
+      - user
+    summary: 특정 사용자 1명의 즐겨찾기 음료 목록을 사용자의 ObjectId로 조회합니다
+    description: 특정 사용자 1명의 즐겨찾기 음료 목록을 사용자의 ObjectId로 조회합니다
+    parameters:
+      - name: userId
+        in: path
+        description: 조회할 사용자의 Id
+        required: true
+        schema:
+          type: string
+          format: ObjectId
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        default: "636f5fa258e81b16d1707b1c"
+                      brand:
+                        type: string
+                        default: "스타벅스"
+                      drink_name:
+                        type: string
+                        default: "아이스 카페 아메리카노"
+                      temp:
+                        type: string
+                        default: ""
+                      img:
+                        type: string
+                        default: "https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[110563]_20210426095937947.jpg"
+                      size:
+                        type: string
+                        default: "톨"
+                      kcal:
+                        type: integer
+                        default: 10
+                      caffeine:
+                        type: integer
+                        default: 150
+                      createdAt:
+                        type: string
+                        default: "2022-11-12T08:53:37.282Z"
+                      updatedAt:
+                        type: string
+                        default: "2022-11-12T08:53:37.282Z"
+  patch:
+    tags:
+      - user
+    summary: ObjectId에 대한 특정 사용자 1명의 즐겨찾기 목록에 음료를 1개 추가합니다.
+    description: ObjectId에 대한 특정 사용자 1명의 즐겨찾기 목록에 음료를 1개 추가합니다.
+    parameters:
+      - name: userId
+        in: path
+        description: 즐겨찾기 목록에 음료를 1개 추가할 사용자의 Id
+        required: true
+        schema:
+          type: string
+          format: ObjectId
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              newFavoriteDrinkId:
+                type: string
+                example: "636f5f1198dec033db2a4bc8"
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: object
+                  properties:
+                    _id:
+                      type: string
+                      default: "63ca8e94be7081de460be06c"
+                    kakaoId:
+                      type: string
+                      default: "2614225007"
+                    kakaoObj:
+                      type: object
+                      default:
+                        {
+                          "ageRange": "null",
+                          "ageRangeNeedsAgreement": false,
+                          "birthday": "null",
+                          "birthdayNeedsAgreement": false,
+                          "birthdayType": "null",
+                          "birthyear": "null",
+                          "birthyearNeedsAgreement": false,
+                          "email": "hived@naver.com",
+                          "emailNeedsAgreement": false,
+                          "gender": "null",
+                          "genderNeedsAgreement": false,
+                          "id": "2614225007",
+                          "isEmailValid": true,
+                          "isEmailVerified": true,
+                          "isKorean": false,
+                          "isKoreanNeedsAgreement": false,
+                          "name": "null",
+                          "nickname": "규민",
+                          "phoneNumber": "null",
+                          "phoneNumberNeedsAgreement": false,
+                          "profileImageUrl": null,
+                          "profileNeedsAgreement": false,
+                          "thumbnailImageUrl": null,
+                        }
+                    favorites:
+                      type: list
+                      default: ["636f5f1198dec033db2a4bc8"]
+                    isDeleted:
+                      type: boolean
+                      default: false
+                    updatedAt:
+                      type: string
+                      default: "2023-01-23T07:11:16.662Z"
+
+/user/log/{userId}:
+  get:
+    tags:
+      - user
+    summary: 특정 사용자 1명의 로그 목록을 사용자의 ObjectId로 조회합니다
+    description: 특정 사용자 1명의 로그 목록을 사용자의 ObjectId로 조회합니다
+    parameters:
+      - name: userId
+        in: path
+        description: 조회할 사용자의 Id
+        required: true
+        schema:
+          type: string
+          format: ObjectId
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  default: "200"
+                message:
+                  type: string
+                  default: "SUCCESS_OK"
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        default: "63cc8b59d30069ae926332b8"
+                      userId:
+                        type: string
+                        default: "63ca8e94be7081de460be06c"
+                      drinkId:
+                        type: string
+                        default: "636f5f1198dec033db2a4bc8"
+                      size:
+                        type: string
+                        defalut: "그란데"
+                      num:
+                        type: integer
+                        default: 3
+                      caffeine:
+                        type: integer
+                        default: 100
+                      createdAt:
+                        type: string
+                        default: "2023-01-22T01:03:21.624Z"
+                      updatedAt:
+                        type: string
+                        default: "2023-01-22T01:03:21.624Z"
+
 components:
   schemas:
     drink:
@@ -263,3 +1004,54 @@ components:
               default: "톨"
 
           default: [["톨", 12], ["그란데", 16]]
+    user:
+      type: object
+      properties:
+        _id:
+          type: string
+          default: "63ca8e94be7081de460be06c"
+        kakaoId:
+          type: string
+          default: "2614225007"
+        kakaoObj:
+          type: object
+        favorites:
+          type: list
+          default: ["636f5f1198dec033db2a4bc7", "636f5f1198dec033db2a4bc6"]
+        isDeleted:
+          type: boolean
+          default: false
+
+    log:
+      type: object
+      properties:
+        _id:
+          type: string
+          default: "63ca91f7be7081de460be076"
+        userId:
+          type: string
+          default: "63ca8e94be7081de460be06c"
+        drinkId:
+          type: string
+          default: "636f5f1198dec033db2a4bc6"
+        size:
+          type: string
+          default: "레귤러"
+        num:
+          type: integer
+          default: "1"
+        caffeine:
+          type: integer
+          default: 0
+        option:
+          type: object
+          properties:
+            temp:
+              type: string
+              default: "ICE"
+            addshot:
+              type: number
+              default: 1
+            additional:
+              type: string
+              default: "decaf"
