@@ -417,7 +417,7 @@ paths:
                     type: array
                     items:
                       type: object
-                      $ref: "#/components/schemas/user"
+                      $ref: "#/components/schemas/drink"
     post:
       tags:
         - user
