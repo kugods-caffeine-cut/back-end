@@ -54,8 +54,27 @@ const UserController = {
   getUserLogs: async (req, res) => {
     try {
       const {userId} = req.params;
-      const userLogs = await Log.find({userId});
-      httpResponse.SUCCESS_OK(res, "", userLogs);
+      let userLogs;
+      try {
+        const year = Number(req.query.y);
+        const month = Number(req.query.m) - 1;
+        const day = Number(req.query.d);
+        let date = new Date(year, month, day);
+        let dateEnd = new Date(year, month, day + 1);
+        userLogs = await Log.find({
+          userId,
+          createdAt: {
+            $gte: date,
+            $lt: dateEnd,
+          },
+        }).populate("drinkId");
+        httpResponse.SUCCESS_OK(res, "", userLogs);
+      } catch (error) {
+        userLogs = await Log.find({
+          userId,
+        }).populate("drinkId");
+        httpResponse.SUCCESS_OK(res, "", userLogs);
+      }
     } catch (error) {
       httpResponse.BAD_REQUEST(res, "", error);
     }

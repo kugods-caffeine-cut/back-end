@@ -464,7 +464,7 @@ paths:
       tags:
         - log
       summary: 특정 사용자 1명의 로그 목록을 사용자의 ObjectId로 조회합니다
-      description: 특정 사용자 1명의 로그 목록을 사용자의 ObjectId로 조회합니다
+      description: 특정 사용자 1명의 로그 목록을 사용자의 ObjectId로 조회합니다. QueryParameter에 연, 월, 일을 입력하면 해당 날짜에 대한 기록을 필터링합니다.
       parameters:
         - name: userId
           in: path
@@ -473,6 +473,21 @@ paths:
           schema:
             type: string
             format: ObjectId
+        - in: query
+          name: y
+          schema:
+            type: integer
+          description: 조회할 날짜의 연도
+        - in: query
+          name: m
+          schema:
+            type: integer
+          description: 조회할 날짜의 월
+        - in: query
+          name: d
+          schema:
+            type: integer
+          description: 조회할 날짜의 일
       responses:
         "200":
           description: Successful operation
@@ -491,31 +506,7 @@ paths:
                     type: array
                     items:
                       type: object
-                      properties:
-                        _id:
-                          type: string
-                          default: "63cc8b59d30069ae926332b8"
-                        userId:
-                          type: string
-                          default: "63ca8e94be7081de460be06c"
-                        drinkId:
-                          type: string
-                          default: "636f5f1198dec033db2a4bc8"
-                        size:
-                          type: string
-                          defalut: "그란데"
-                        num:
-                          type: integer
-                          default: 3
-                        caffeine:
-                          type: integer
-                          default: 100
-                        createdAt:
-                          type: string
-                          default: "2023-01-22T01:03:21.624Z"
-                        updatedAt:
-                          type: string
-                          default: "2023-01-22T01:03:21.624Z"
+                      $ref: "#/components/schemas/log"
 
   /api/log:
     get:
@@ -619,31 +610,7 @@ paths:
                     default: "SUCCESS_OK"
                   data:
                     type: object
-                    properties:
-                      _id:
-                        type: string
-                        default: "63cc8b59d30069ae926332b8"
-                      userId:
-                        type: string
-                        default: "63ca8e94be7081de460be06c"
-                      drinkId:
-                        type: string
-                        default: "636f5f1198dec033db2a4bc8"
-                      size:
-                        type: string
-                        defalut: "그란데"
-                      num:
-                        type: integer
-                        default: 3
-                      caffeine:
-                        type: integer
-                        default: 100
-                      createdAt:
-                        type: string
-                        default: "2023-01-22T01:03:21.624Z"
-                      updatedAt:
-                        type: string
-                        default: "2023-01-22T01:03:21.624Z"
+                    $ref: "#/components/schemas/log"
 
   /api/log/{logId}:
     get:
