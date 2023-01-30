@@ -12,6 +12,7 @@ const connect = mongoose
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PWD}@${process.env.DB_NAME}.awwmmyt.mongodb.net/?retryWrites=true&w=majority`,
     {
       useNewUrlParser: true,
+      dbName: "caffeine-out",
     },
   )
   .then(handleDBConnect, handleDBError);

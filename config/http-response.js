@@ -16,6 +16,14 @@ class httpResponse {
     };
     res.json(response);
   }
+  static UNAUTHORIZED(res, message = "", data = {}) {
+    const response = {
+      status: 401,
+      message,
+      data,
+    };
+    res.json(response);
+  }
   static NOT_FOUND(res, message, data) {
     const response = {
       status: 404,
