@@ -1,10 +1,11 @@
-const rootRouter = require("express").Router();
+const RootRouter = require("express").Router();
 const RootController = require("../controllers/rootController");
 const {apiRouter} = require("./apiRouter");
 const {swaggerUi, specs} = require("../config/swagger");
+const AuthController = require("../controllers/authController");
 
-rootRouter.get("/", RootController.getHome);
-rootRouter.use("/api", apiRouter);
-rootRouter.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+RootRouter.get("/", RootController.getHome);
+RootRouter.use("/api", AuthController.checkToken, apiRouter);
+RootRouter.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
-module.exports = {rootRouter};
+module.exports = {RootRouter};

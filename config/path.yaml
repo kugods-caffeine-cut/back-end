@@ -9,11 +9,121 @@ info:
 servers:
   - url: http://ec2-52-78-225-87.ap-northeast-2.compute.amazonaws.com
 tags:
+  - name: auth
+    description: API 인증에 대한 항목입니다.
   - name: drink
     description: 음료에 대한 항목입니다.
+  - name: log
+    description: 로그에 대한 항목입니다.
+  - name: user
+    description: 사용자에 대한 항목입니다.
+
 paths:
+  /api/auth/signUp:
+    post:
+      tags:
+        - auth
+      summary: 새로운 사용자 1명을 생성하고 사용자 토큰을 발급합니다.
+      description: 새로운 사용자 1명을 생성합니다. 새로운 사용자의 JWT를 반환합니다.
+      requestBody:
+        description: 카카오 사용자 Object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/kakao_object"
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 200
+                  message:
+                    type: string
+                    default: "SUCCESS_CREATED"
+                  data:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                      user:
+                        type: object
+                        $ref: "#/components/schemas/user"
+        "400":
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 400
+                  message:
+                    type: string
+                    default: "BAD_REQUEST"
+                  error:
+                    type: object
+
+  /api/auth/signIn:
+    post:
+      tags:
+        - auth
+      summary: 기존 사용자의 카카오ID를 통해 사용자 토큰을 발급합니다.
+      description: 기존 사용자의 카카오ID를 통해 사용자의 JWT를 반환합니다.
+      requestBody:
+        description: 사용자 카카오ID
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                kakaoId:
+                  type: string
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 200
+                  message:
+                    type: string
+                    default: "SUCCESS_CREATED"
+                  data:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+        "400":
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 400
+                  message:
+                    type: string
+                    default: "BAD_REQUEST"
+                  error:
+                    type: object
   /api/drink:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - drink
       summary: 모든 음료를 조회합니다.
@@ -63,14 +173,16 @@ paths:
                           default: 198
   /api/drink/{drinkId}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - drink
-      summary: 특정 음료 1개를 ObjectID로 조회합니다
-      description: 특정 음료 1개를 ObjectID로 조회합니다
+      summary: 특정 음료 1개를 ObjectId로 조회합니다
+      description: 특정 음료 1개를 ObjectId로 조회합니다
       parameters:
         - name: drinkId
           in: path
-          description: 조회할 음료의 ID
+          description: 조회할 음료의 Id
           required: true
           schema:
             type: string
@@ -117,7 +229,7 @@ paths:
                         type: integer
                         default: 150
         "400":
-          description: Invalid Object ID Error
+          description: Invalid Object Id Error
           content:
             application/json:
               schema:
@@ -161,6 +273,8 @@ paths:
 
   /api/drink/search/{searchKey}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - drink
       summary: 특정 키워드로 연관된 음료 목록을 조회합니다
@@ -216,7 +330,461 @@ paths:
                           type: integer
                           default: 150
 
+  /api/user/:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - user
+      summary: 모든 사용자 목록을 조회합니다.
+      description: 모든 사용자 목록을 조회합니다.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 200
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/user"
+  /api/user/{userId}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - user
+      summary: 1명의 사용자를 조회합니다.
+      description: 1명의 사용자를 조회합니다.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: 사용자의 ObjectId(_id)
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 200
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/user"
+        "400":
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 400
+                  message:
+                    type: string
+                    default: "BAD_REQUEST"
+                  error:
+                    type: object
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - user
+      summary: 1명의 사용자를 삭제합니다.
+      description: 1명의 사용자의 isDeleted 필드를 변경하여 soft delete합니다.
+      parameters:
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+          description: 사용자의 ObjectId(_id)
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 200
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/user"
+        "400":
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 400
+                  message:
+                    type: string
+                    default: "BAD_REQUEST"
+                  error:
+                    type: object
+
+  /api/user/favorite/{userId}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - user
+      summary: 특정 사용자 1명의 즐겨찾기 음료 목록을 사용자의 ObjectId로 조회합니다
+      description: 특정 사용자 1명의 즐겨찾기 음료 목록을 사용자의 ObjectId로 조회합니다
+      parameters:
+        - name: userId
+          in: path
+          description: 조회할 사용자의 Id
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "200"
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/drink"
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - user
+      summary: ObjectId에 대한 특정 사용자 1명의 즐겨찾기 목록에 음료를 1개 추가합니다.
+      description: ObjectId에 대한 특정 사용자 1명의 즐겨찾기 목록에 음료를 1개 추가합니다.
+      parameters:
+        - name: userId
+          in: path
+          description: 즐겨찾기 목록에 음료를 1개 추가할 사용자의 Id
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newFavoriteDrinkId:
+                  type: string
+                  example: "636f5f1198dec033db2a4bc8"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "200"
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/user"
+
+  /api/user/log/{userId}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - log
+      summary: 특정 사용자 1명의 로그 목록을 사용자의 ObjectId로 조회합니다
+      description: 특정 사용자 1명의 로그 목록을 사용자의 ObjectId로 조회합니다. QueryParameter에 연, 월, 일을 입력하면 해당 날짜에 대한 기록을 필터링합니다.
+      parameters:
+        - name: userId
+          in: path
+          description: 조회할 사용자의 Id
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+        - in: query
+          name: y
+          schema:
+            type: integer
+          description: 조회할 날짜의 연도
+        - in: query
+          name: m
+          schema:
+            type: integer
+          description: 조회할 날짜의 월
+        - in: query
+          name: d
+          schema:
+            type: integer
+          description: 조회할 날짜의 일
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "200"
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      $ref: "#/components/schemas/log"
+
+  /api/log:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - log
+      summary: 모든 로그를 조회합니다.
+      description: 모든 로그 목록을 조회합니다.
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "200"
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        _id:
+                          type: string
+                          default: "63ca91f7be7081de460be076"
+                        userId:
+                          type: string
+                          default: "63ca8e94be7081de460be06c"
+                        drinkId:
+                          type: string
+                          default: "636f5f1198dec033db2a4bc6"
+                        size:
+                          type: string
+                          default: "그란데"
+                        num:
+                          type: integer
+                          default: 1
+                        caffeine:
+                          type: integer
+                          default: 100
+                        option:
+                          type: object
+                          default:
+                            {temp: "ICE", addshot: 1, additional: "decaf"}
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - log
+      summary: 로그를 하나 생성합니다.
+      description: 로그를 하나 생성합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: "63ca8e94be7081de460be06c"
+                drinkId:
+                  type: string
+                  example: "636f5f1198dec033db2a4bc8"
+                size:
+                  type: string
+                  example: "그란데"
+                num:
+                  type: integer
+                  example: 3
+                caffeine:
+                  type: integer
+                  example: 100
+                option:
+                  type: object
+                  properties:
+                    temp:
+                      type: string
+                      example: "ICE"
+                    addshot:
+                      type: integer
+                      example: 1
+                    additional:
+                      type: string
+                      example: "decaf"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "200"
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: object
+                    $ref: "#/components/schemas/log"
+
+  /api/log/{logId}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - log
+      summary: 특정 로그 1개를 ObjectId로 조회합니다
+      description: 특정 로그 1개를 ObjectId로 조회합니다
+      parameters:
+        - name: logId
+          in: path
+          description: 조회할 로그의 Id
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "200"
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        default: "63ca91f7be7081de460be076"
+                      userId:
+                        type: string
+                        default: "63ca8e94be7081de460be06c"
+                      drinkId:
+                        type: string
+                        default: "636f5f1198dec033db2a4bc6"
+                      size:
+                        type: string
+                        default: "레귤러"
+                      num:
+                        type: integer
+                        default: 1
+                      caffeine:
+                        type: integer
+                        default: 0
+                      option:
+                        type: object
+                        default: {temp: "ICE", addshot: 1, additional: "decaf"}
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - log
+      summary: 특정 로그 1개를 ObjectId로 삭제합니다
+      description: 특정 로그 1개를 ObjectId로 삭제합니다
+      parameters:
+        - name: logId
+          in: path
+          description: 삭제할 로그의 Id
+          required: true
+          schema:
+            type: string
+            format: ObjectId
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "200"
+                  message:
+                    type: string
+                    default: "SUCCESS_OK"
+                  data:
+                    type: string
+                    example: "id가 63cbd7064475043b0050b5db인 log를 삭제했습니다."
+
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     drink:
       type: object
@@ -261,5 +829,136 @@ components:
             items:
               type: string
               default: "톨"
-
           default: [["톨", 12], ["그란데", 16]]
+    user:
+      type: object
+      properties:
+        _id:
+          type: string
+          default: "636f5fa258e81b16d1707b1c"
+        kakaoId:
+          type: string
+          default: "20112319"
+          description: asdasd
+        kakaoObj:
+          type: object
+          $ref: "#/components/schemas/kakao_object"
+        favorites:
+          type: array
+          items:
+            type: string
+            default: "636f5fa258e81b16d1707b1c"
+        isDeleted:
+          type: boolean
+          default: false
+        createdAt:
+          type: string
+          default: "20230111"
+        updatedAt:
+          type: string
+          default: "20230111"
+    kakao_object:
+      type: object
+      properties:
+        ageRange:
+          type: string
+          default: "null"
+        ageRangeNeedsAgreement:
+          type: boolean
+          default: false
+        birthday:
+          type: string
+          default: "null"
+        birthdayNeedsAgreement:
+          type: boolean
+          default: false
+        birthdayType:
+          type: string
+          default: "null"
+        birthyear:
+          type: string
+          default: "null"
+        birthyearNeedsAgreement:
+          type: boolean
+          default: false
+        email:
+          type: string
+          default: "hived@naver.com"
+        emailNeedsAgreement:
+          type: boolean
+          default: false
+        gender:
+          type: string
+          default: "null"
+        genderNeedsAgreement:
+          type: boolean
+          default: false
+        id:
+          type: string
+          default: "2614225007"
+        isEmailValid:
+          type: boolean
+          default: true
+        isEmailVerified:
+          type: boolean
+          default: true
+        isKorean:
+          type: boolean
+          default: false
+        isKoreanNeedsAgreement:
+          type: boolean
+          default: false
+        name:
+          type: string
+          default: "null"
+        nickname:
+          type: string
+          default: "규민"
+        phoneNumber:
+          type: string
+          default: "null"
+        phoneNumberNeedsAgreement:
+          type: boolean
+          default: false
+        profileImageUrl:
+          type: string
+          default: null
+        profileNeedsAgreement:
+          type: boolean
+          default: false
+        thumbnailImageUrl:
+          type: string
+          default: null
+    log:
+      type: object
+      properties:
+        _id:
+          type: string
+          default: "63ca91f7be7081de460be076"
+        userId:
+          type: string
+          default: "63ca8e94be7081de460be06c"
+        drinkId:
+          type: string
+          default: "636f5f1198dec033db2a4bc6"
+        size:
+          type: string
+          default: "레귤러"
+        num:
+          type: integer
+          default: "1"
+        caffeine:
+          type: integer
+          default: 0
+        option:
+          type: object
+          properties:
+            temp:
+              type: string
+              default: "ICE"
+            addshot:
+              type: number
+              default: 1
+            additional:
+              type: string
+              default: "decaf"
