@@ -3,11 +3,11 @@ const {Size} = require("../model/Size");
 const {User} = require("../model/User");
 const {Log} = require("../model/Log");
 const {httpResponse} = require("../config/http-response");
+const jwt = require("../lib/jwt");
 
 const checkValidUser = async kakaoId => {
   try {
-    const user = await User.find({kakaoId: kakaoId, isDeleted: false});
-    console.log(user);
+    const user = await User.findOne({kakaoId: kakaoId, isDeleted: false});
     if (user) {
       return false;
     } else {
@@ -89,7 +89,11 @@ const UserController = {
           kakaoObj: kakaoObj,
           favorites: [],
         });
-        return httpResponse.SUCCESS_CREATED(res, "", newUser);
+        const token = jwt.sign(newUser);
+        return httpResponse.SUCCESS_CREATED(res, "", {
+          access_token: token,
+          user: newUser,
+        });
       } else {
         return httpResponse.BAD_REQUEST(
           res,
