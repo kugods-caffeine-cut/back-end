@@ -9,14 +9,15 @@ info:
 servers:
   - url: http://ec2-52-78-225-87.ap-northeast-2.compute.amazonaws.com
 tags:
+  - name: auth
+    description: API 인증에 대한 항목입니다.
   - name: drink
     description: 음료에 대한 항목입니다.
   - name: log
     description: 로그에 대한 항목입니다.
   - name: user
     description: 사용자에 대한 항목입니다.
-  - name: auth
-    description: API 인증에 대한 항목입니다.
+
 paths:
   /api/auth/signUp:
     post:
@@ -68,8 +69,61 @@ paths:
                     default: "BAD_REQUEST"
                   error:
                     type: object
+
+  /api/auth/signIn:
+    post:
+      tags:
+        - auth
+      summary: 기존 사용자의 카카오ID를 통해 사용자 토큰을 발급합니다.
+      description: 기존 사용자의 카카오ID를 통해 사용자의 JWT를 반환합니다.
+      requestBody:
+        description: 사용자 카카오ID
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                kakaoId:
+                  type: string
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 200
+                  message:
+                    type: string
+                    default: "SUCCESS_CREATED"
+                  data:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+        "400":
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 400
+                  message:
+                    type: string
+                    default: "BAD_REQUEST"
+                  error:
+                    type: object
   /api/drink:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - drink
       summary: 모든 음료를 조회합니다.
@@ -119,6 +173,8 @@ paths:
                           default: 198
   /api/drink/{drinkId}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - drink
       summary: 특정 음료 1개를 ObjectId로 조회합니다
@@ -217,6 +273,8 @@ paths:
 
   /api/drink/search/{searchKey}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - drink
       summary: 특정 키워드로 연관된 음료 목록을 조회합니다
@@ -274,6 +332,8 @@ paths:
 
   /api/user/:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - user
       summary: 모든 사용자 목록을 조회합니다.
@@ -299,6 +359,8 @@ paths:
                       $ref: "#/components/schemas/user"
   /api/user/{userId}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - user
       summary: 1명의 사용자를 조회합니다.
@@ -345,6 +407,8 @@ paths:
                   error:
                     type: object
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - user
       summary: 1명의 사용자를 삭제합니다.
@@ -393,6 +457,8 @@ paths:
 
   /api/user/favorite/{userId}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - user
       summary: 특정 사용자 1명의 즐겨찾기 음료 목록을 사용자의 ObjectId로 조회합니다
@@ -425,6 +491,8 @@ paths:
                       type: object
                       $ref: "#/components/schemas/drink"
     post:
+      security:
+        - bearerAuth: []
       tags:
         - user
       summary: ObjectId에 대한 특정 사용자 1명의 즐겨찾기 목록에 음료를 1개 추가합니다.
@@ -467,6 +535,8 @@ paths:
 
   /api/user/log/{userId}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - log
       summary: 특정 사용자 1명의 로그 목록을 사용자의 ObjectId로 조회합니다
@@ -516,6 +586,8 @@ paths:
 
   /api/log:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - log
       summary: 모든 로그를 조회합니다.
@@ -562,6 +634,8 @@ paths:
                           default:
                             {temp: "ICE", addshot: 1, additional: "decaf"}
     post:
+      security:
+        - bearerAuth: []
       tags:
         - log
       summary: 로그를 하나 생성합니다.
@@ -620,6 +694,8 @@ paths:
 
   /api/log/{logId}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - log
       summary: 특정 로그 1개를 ObjectId로 조회합니다
@@ -671,6 +747,8 @@ paths:
                         type: object
                         default: {temp: "ICE", addshot: 1, additional: "decaf"}
     delete:
+      security:
+        - bearerAuth: []
       tags:
         - log
       summary: 특정 로그 1개를 ObjectId로 삭제합니다
@@ -702,6 +780,11 @@ paths:
                     example: "id가 63cbd7064475043b0050b5db인 log를 삭제했습니다."
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     drink:
       type: object

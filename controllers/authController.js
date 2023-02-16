@@ -11,7 +11,7 @@ const AuthController = {
 
       if (user) {
         const token = jwt.sign(user);
-        return httpResponse.SUCCESS_OK(res, "", token);
+        return httpResponse.SUCCESS_OK(res, "", {access_token: token});
       }
 
       return httpResponse.UNAUTHORIZED(res);
