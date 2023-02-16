@@ -15,7 +15,59 @@ tags:
     description: 로그에 대한 항목입니다.
   - name: user
     description: 사용자에 대한 항목입니다.
+  - name: auth
+    description: API 인증에 대한 항목입니다.
 paths:
+  /api/auth/signUp:
+    post:
+      tags:
+        - auth
+      summary: 새로운 사용자 1명을 생성하고 사용자 토큰을 발급합니다.
+      description: 새로운 사용자 1명을 생성합니다. 새로운 사용자의 JWT를 반환합니다.
+      requestBody:
+        description: 카카오 사용자 Object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/kakao_object"
+      responses:
+        "201":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 200
+                  message:
+                    type: string
+                    default: "SUCCESS_CREATED"
+                  data:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                      user:
+                        type: object
+                        $ref: "#/components/schemas/user"
+        "400":
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    default: 400
+                  message:
+                    type: string
+                    default: "BAD_REQUEST"
+                  error:
+                    type: object
   /api/drink:
     get:
       tags:
@@ -245,52 +297,6 @@ paths:
                     items:
                       type: object
                       $ref: "#/components/schemas/user"
-
-    post:
-      tags:
-        - user
-      summary: 새로운 사용자 1명을 생성합니다.
-      description: 새로운 사용자 1명을 생성합니다.
-      requestBody:
-        description: 카카오 사용자 Object
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/kakao_object"
-      responses:
-        "201":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 200
-                  message:
-                    type: string
-                    default: "SUCCESS_CREATED"
-                  data:
-                    type: object
-                    $ref: "#/components/schemas/user"
-        "400":
-          description: BAD REQUEST
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    default: 400
-                  message:
-                    type: string
-                    default: "BAD_REQUEST"
-                  error:
-                    type: object
-
   /api/user/{userId}:
     get:
       tags:
