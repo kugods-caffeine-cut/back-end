@@ -27,9 +27,9 @@ apiRouter.get(
   UserController.getFavoriteDrinks,
 );
 apiRouter.post("/user/favorite/:userId", UserController.addOneFavoriteDrink);
-apiRouter.post("/user", UserController.createOneUser);
 apiRouter.delete("/user/:userId", isLoggedIn, UserController.deleteOneUser);
 
-apiRouter.post("/auth/signIn", AuthController.signIn)
+apiRouter.post("/auth/signIn", AuthController.signIn);
+apiRouter.post("/auth/signUp", UserController.createOneUser);
 
 module.exports = {apiRouter};
